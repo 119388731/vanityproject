@@ -11,3 +11,4 @@ Removing copyright information without the license will result in suspension of 
 REFERENCES
 BOOTSTRAP: https://themewagon.com/themes/free-bootstrap-4-html5-education-website-template-courses/
 REGISTER/LOGIN: https://gitlab.com/tutorialsclass/php-simple-login-registration-script
+
