@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> App landing</title>
+    <title> Register</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -32,7 +32,7 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="assets/img/logo/loder.png" alt="">
+                    <img src="assets/img/logo/logo.png" alt="">
                 </div>
             </div>
         </div>
@@ -51,7 +51,7 @@
         <div class="login-form">
             <!-- logo-login -->
             <div class="logo-login">
-                <a href="index.html"><img src="assets/img/logo/loder.png" alt=""></a>
+                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
             </div>
             <h2>Registration Here</h2>
 
@@ -80,16 +80,15 @@
                 <input  type="tel" name="phone" placeholder="Phone">
             </div>
             <div class="form-input">
-                <label for="name">User Type</label>
-                Customer<input type="radio" name="utype" value="Customer">
-                Staff<input type="radio" name="utype" value="Staff">
-                Manager<input type="radio" name="utype" value="Manager">
+                <label for="name">User Type</label><br>
+                <label for="customer">Customer</label><Br><input type="radio" name="utype" value="Customer"><hr>
+                <label for="staff">Staff</label><br><input type="radio" name="utype" value="Staff"><hr>
+                <label for="manager">Manager</label><br><input type="radio" name="utype" value="Manager">
             </div>
             <div class="form-input pt-30">
                 <input type="submit" name="register" value="Register">
             </div>
-            <!-- Forget Password -->
-            <a href="login.html" class="registration">login</a>
+            <a href="login.php" class="login">login</a>
         </div>
         <?php
         //including the database connection file

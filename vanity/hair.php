@@ -1,9 +1,38 @@
+<?php
+/*
+// Start PHP session at the beginning 
+session_start();
+
+// Create database connection using config file
+include_once("db-config.php");
+
+// If form submitted, collect email and password from form
+if (isset($_POST['login'])) {
+    $email    = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Check if a user exists with given username & password
+    $result = mysqli_query($mysqli, "select 'email', 'password' from users
+        where email='$email' and password='$password'");
+
+    // Count the number of user/rows returned by query 
+    $user_matched = mysqli_num_rows($result);
+
+    // Check If user matched/exist, store user email in session and redirect to sample page-1
+    if ($user_matched > 0) {
+        $_SESSION["email"] = $email;
+        header("location: page-2.php");
+    } else {
+        echo "User email or password is not matched <br/><br/>";
+    }
+}*/
+?>
 <!doctype html>
 <html class="no-js" lang="zxx">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> App landing</title>
+    <title> Hair Preferences</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -32,7 +61,7 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="assets/img/logo/loder.png" alt="">
+                    <img src="assets/img/logo/logo.png" alt="">
                 </div>
             </div>
         </div>
@@ -48,15 +77,15 @@
     <form class="form-default" action="hair.php" method="POST"  >
    
         
-        <div class="user-form">
+        <div class="login-form">
             <!-- logo-login -->
             <div class="logo-login">
-                <a href="index.html"><img src="assets/img/logo/loder.png" alt=""></a>
+                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
             </div>
             <h2>Hair</h2>
-
+            <input type="hidden" id="email" name="email" value="email">
             <div class="form-input">
-            <label for="hytpe">Choose a Hair Type:</label>
+            <label for="hytpe">Select your Hair Type:</label><br>
             <select name="htype" id="hytpe">
                 <option value="straight">straight</option>
                 <option value="wavy">wavy</option>
@@ -67,6 +96,7 @@
             <br><br>
             </div>
             <div class="form-input">
+            <label for="hytpe">Select your Hair Thickness:</label><br>
             <select name="hthick" id="hthick">
                 <option value="fine">fine</option>
                 <option value="medium">medium</option>
@@ -75,6 +105,7 @@
             <br><br>
             </div>
             <div class="form-input">
+            <label for="hytpe">Select your Scalp conditions:</label><br>
             <select name="scalp" id="scalp">
                 <option value="dry">dry</option>
                 <option value="normal">normal</option>
@@ -83,6 +114,7 @@
             <br><br>
             </div>
             <div class="form-input">
+            <label for="hytpe">Select your Hair Length:</label><br>
             <select name="hlength" id="hlength">
                 <option value="vshort">very short</option>
                 <option value="short">short</option>
@@ -91,6 +123,7 @@
                 <option value="vlong">very long</option>
             </select>
             </div>
+            <br><br>
             <div class="form-input">
                 <label for="hnotes">Hair notes</label>
                 <input  type="text" name="hnotes" placeholder="Hair goals, concerns, etc">
