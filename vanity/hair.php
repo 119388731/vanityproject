@@ -1,31 +1,11 @@
 <?php
-/*
-// Start PHP session at the beginning 
 session_start();
 
-// Create database connection using config file
-include_once("db-config.php");
-
-// If form submitted, collect email and password from form
-if (isset($_POST['login'])) {
-    $email    = $_POST['email'];
-    $password = $_POST['password'];
-
-    // Check if a user exists with given username & password
-    $result = mysqli_query($mysqli, "select 'email', 'password' from users
-        where email='$email' and password='$password'");
-
-    // Count the number of user/rows returned by query 
-    $user_matched = mysqli_num_rows($result);
-
-    // Check If user matched/exist, store user email in session and redirect to sample page-1
-    if ($user_matched > 0) {
-        $_SESSION["email"] = $email;
-        header("location: page-2.php");
-    } else {
-        echo "User email or password is not matched <br/><br/>";
-    }
-}*/
+// This page can be accessed only after login
+// Redirect user to login page, if user email is not available in session
+if (!isset($_SESSION["email"])) {
+    header("location: hair.php");
+}
 ?>
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -85,27 +65,27 @@ if (isset($_POST['login'])) {
             <h2>Hair</h2>
             <input type="hidden" id="email" name="email" value="email">
             <div class="form-input">
-            <label for="hytpe">Select your Hair Type:</label><br>
-            <select name="htype" id="hytpe">
-                <option value="straight">straight</option>
-                <option value="wavy">wavy</option>
-                <option value="curly">curly</option>
-                <option value="kinky">kinky</option>
-                <option value="coily">coily</option>
+            <label for="hair_type">Select your Hair Type:</label><br>
+            <select name="hair_type" id="hair_type">
+                <option value="hair_straight">straight</option>
+                <option value="hair_wavy">wavy</option>
+                <option value="hair_curly">curly</option>
+                <option value="hair_kinky">kinky</option>
+                <option value="hair_coily">coily</option>
             </select>
             <br><br>
             </div>
             <div class="form-input">
-            <label for="hytpe">Select your Hair Thickness:</label><br>
-            <select name="hthick" id="hthick">
-                <option value="fine">fine</option>
-                <option value="medium">medium</option>
-                <option value="coarse">coarse</option>
+            <label for="hair_thickness">Select your Hair Thickness:</label><br>
+            <select name="hair_thickness" id="hair_thickness">
+                <option value="hair_fine">fine</option>
+                <option value="hair_medium">medium</option>
+                <option value="hair_coarse">coarse</option>
             </select>
             <br><br>
             </div>
             <div class="form-input">
-            <label for="hytpe">Select your Scalp conditions:</label><br>
+            <label for="scalp">Select your Scalp conditions:</label><br>
             <select name="scalp" id="scalp">
                 <option value="dry">dry</option>
                 <option value="normal">normal</option>
@@ -114,38 +94,39 @@ if (isset($_POST['login'])) {
             <br><br>
             </div>
             <div class="form-input">
-            <label for="hytpe">Select your Hair Length:</label><br>
-            <select name="hlength" id="hlength">
-                <option value="vshort">very short</option>
-                <option value="short">short</option>
-                <option value="medium">medium</option>
-                <option value="long">long</option>
-                <option value="vlong">very long</option>
+            <label for="hair_length">Select your Hair Length:</label><br>
+            <select name="hair_length" id="hair_length">
+                <option value="hair_vshort">very short</option>
+                <option value="hair_short">short</option>
+                <option value="hair_medium">medium</option>
+                <option value="hsir_long">long</option>
+                <option value="hair_vlong">very long</option>
             </select>
             </div>
             <br><br>
             <div class="form-input">
-                <label for="hnotes">Hair notes</label>
+                <label for="hair_notes">Hair notes</label>
                 <input  type="text" name="hnotes" placeholder="Hair goals, concerns, etc">
             </div>
             <div class="form-input pt-30">
-                <input type="submit" name="hpref" value="Submit">
+                <input type="submit" name="submit" value="submit">
             </div>
         </div>
         <?php
         //including the database connection file
         include_once("db-config.php");
 
-        // Check If form submitted, insert user data into database.
-        if (isset($_POST['hpref'])) {
-            $htype = $_POST['htype'];
-            $hthick = $_POST['hthick'];
+        // Check if form submitted, insert user data into database - adapted from https://gitlab.com/tutorialsclass/php-simple-login-registration-script
+        if (isset($_POST['submit'])) {
+            $email = $_SESSION['email'];
+            $hair_type = $_POST['hair_type'];
+            $hair_thickness = $_POST['hair_thickness'];
             $scalp = $_POST['scalp'];
-            $hlength = $_POST['hlength'];
-            $hnotes = $_POST['hnotes'];
+            $hair_length = $_POST['hair_length'];
+            $hair_notes = $_POST['hair_notes'];
 
                 // Insert user data into database
-                $result   = mysqli_query($mysqli, "INSERT INTO hairpref(htype, hthick, scalp, hlength, hnotes) VALUES('$htype','$hthick','$scalp', '$hlength', '$hnotes')");
+                $result   = mysqli_query($mysqli, "INSERT INTO hair_pref(email, hair_type, hair_thickness, scalp, hair_length, hair_notes) VALUES('$email','$hair_type','$hair_thickness','$scalp', '$hair_length', '$hair_notes')");
 
                 // check if user data inserted successfully.
                 if ($result) {

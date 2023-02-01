@@ -93,12 +93,14 @@
         <?php
         //including the database connection file
         include_once("db-config.php");
-
+        //adapted from https://gitlab.com/tutorialsclass/php-simple-login-registration-script
         // Check If form submitted, insert user data into database.
         if (isset($_POST['register'])) {
             $name     = $_POST['name'];
             $email    = $_POST['email'];
+            //hash password for security https://www.webslesson.info/2016/10/php-login-registration-form-with-md5-password-encryption.html 
             $password = $_POST['password'];
+            $password = md5($password); 
             $address = $_POST['address'];
             $phone = $_POST['phone'];
             $utype = $_POST['utype'];
@@ -113,13 +115,14 @@
             if ($user_matched > 0) {
                 echo "<br/><br/><strong>Error: </strong> User already exists with the email id '$email'.";
             } else {
-                //hash password for security
+                //hash password for security https://www.webslesson.info/2016/10/php-login-registration-form-with-md5-password-encryption.html 
                 // Insert user data into database
                 $result   = mysqli_query($mysqli, "INSERT INTO users(name,email,password, address, phone, utype) VALUES('$name','$email','$password', '$address', '$phone', '$utype')");
 
                 // check if user data inserted successfully.
                 if ($result) {
-                    echo "<br/><br/>User Registered successfully.";
+                    $_SESSION["email"] = $email;
+                    header("location: options.php");
                 } else {
                     echo "Registration error. Please try again." . mysqli_error($mysqli);
                 }

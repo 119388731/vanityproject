@@ -10,5 +10,6 @@ Removing copyright information without the license will result in suspension of 
 
 REFERENCES
 BOOTSTRAP: https://themewagon.com/themes/free-bootstrap-4-html5-education-website-template-courses/
-REGISTER/LOGIN: https://gitlab.com/tutorialsclass/php-simple-login-registration-script
+REGISTER/LOGIN/LOGOUT: https://gitlab.com/tutorialsclass/php-simple-login-registration-script
 SELECT: https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_select
+HASH PASSWORD: //hash password for security https://www.webslesson.info/2016/10/php-login-registration-form-with-md5-password-encryption.html 

@@ -1,5 +1,5 @@
 <?php
-//adapted from https://gitlab.com/tutorialsclass/php-simple-login-registration-script
+/*
 // Start PHP session at the beginning 
 session_start();
 
@@ -21,18 +21,18 @@ if (isset($_POST['login'])) {
     // Check If user matched/exist, store user email in session and redirect to sample page-1
     if ($user_matched > 0) {
         $_SESSION["email"] = $email;
-        header("location: options.php");
+        header("location: page-2.php");
     } else {
         echo "User email or password is not matched <br/><br/>";
     }
-}
+}*/
 ?>
 <!doctype html>
 <html class="no-js" lang="zxx">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Login</title>
+    <title> Nail Preferences</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -69,37 +69,92 @@ if (isset($_POST['login'])) {
     <!-- Preloader Start-->
 
 
-    <main class="login-body" data-vide-bg="assets/img/login-bg.mp4">
-        <!-- Login Admin -->
-        <div class="logInForm">
-        <form class="form-default" action="login.php" method="POST">
-    
-            <div class="login-form">
-                <!-- logo-login -->
-                <div class="logo-login">
-                    <a href="index.php"><img src="assets/img/logo/loder.png" alt=""></a>
-                </div>
-                <h2>Login Here</h2>
-                <div class="form-input">
-                    <label for="name">Email</label>
-                    <input  type="email" name="email" id="email" placeholder="Email">
-                </div>
-                <div class="form-input">
-                    <label for="name">Password</label>
-                    <input type="password" name="password" id="password" placeholder="Password">
-                </div>
-                <div class="form-input pt-30">
-                    <input type="submit" name="login" value="Login">
-                </div>
-                
-                <!-- Register -->
-                <a href="register.php" class="registration">Registration</a>
-            </div>
-        </form>
-        </div>
+<!-- Register -->
 
-        <!-- /end login form -->
-    </main>
+<main class="login-body" data-vide-bg="assets/img/login-bg.mp4">
+    <!-- Login Admin -->
+    <div class="form">
+    <form class="form-default" action="nailart.php" method="POST"  >
+        <div class="login-form">
+            <!-- logo-login -->
+            <div class="logo-login">
+                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+            </div>
+            <h2>Nails</h2>
+            <input type="hidden" id="email" name="email" value="email">
+            <div class="form-input">
+            <label for="nservice">Select your usual Nail service:</label><br>
+            <select name="nservice" id="nservice">
+                <option value="manicure">manicure</option>
+                <option value="shellac">shellac</option>
+                <option value="gel">gel</option>
+                <option value="acrylics">acrylics</option>
+                <option value="presson">press ons</option>
+            </select>
+            <br><br>
+            </div>
+            <div class="form-input">
+            <label for="nshape">Select your preferred nail shape:</label><br>
+            <select name="nshape" id="nshape">
+                <option value="oval">oval</option>
+                <option value="almond">almond</option>
+                <option value="square">square</option>
+                <option value="squoval">squoval</option>
+                <option value="coffin">coffin</option>
+                <option value="stiletto">stiletto</option>
+                <option value="round">round</option>
+            </select>
+            <br><br>
+            </div>
+            <div class="form-input">
+            <label for="nstyle">Select your preferred nail style:</label><br>
+            <select name="nstyle" id="nstyle">
+                <option value="simple">simple</option>
+                <option value="frenchtip">french tip</option>
+                <option value="someart">some art</option>
+                <option value="embellished">embellished</option>
+                <label for="nstyletype">Other:</label>
+                <input type="text" name="nstyletype" placeholder="Other">
+            </select>
+            <br><br>
+            </div>
+            <br><br>
+            <div class="form-input">
+                <label for="nanotes">Nail art notes</label>
+                <input  type="text" name="nanotes" placeholder="Favourite colour, nail inspiration etc">
+            </div>
+            <div class="form-input pt-30">
+                <input type="submit" name="nailartpref" value="Submit">
+            </div>
+        </div>
+        <?php
+        //including the database connection file
+        include_once("db-config.php");
+
+        // Check If form submitted, insert user data into database.
+        if (isset($_POST['nailartpref'])) {
+            $nservice = $_POST['nservice'];
+            $nshape = $_POST['nshape'];
+            $nstyle = $_POST['nstyle'];
+            $nanotes = $_POST['nanotes'];
+
+                // Insert user data into database
+                $result   = mysqli_query($mysqli, "INSERT INTO nailartpref(nservice, nshape, nstyle, nanotes) VALUES('$nservice','$nshape','$nstyle', '$nanotes')");
+
+                // check if user data inserted successfully.
+                if ($result) {
+                    echo "<br/><br/> Hair preferences added.";
+                } else {
+                    echo "Preference addition error. Please try again." . mysqli_error($mysqli);
+                }
+            }
+        
+
+        ?>
+    </form>
+    </div>
+    <!-- /end login form -->
+</main>
 
 
     <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>

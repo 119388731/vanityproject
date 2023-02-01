@@ -1,5 +1,5 @@
 <?php
-//adapted from https://gitlab.com/tutorialsclass/php-simple-login-registration-script
+/*
 // Start PHP session at the beginning 
 session_start();
 
@@ -21,18 +21,18 @@ if (isset($_POST['login'])) {
     // Check If user matched/exist, store user email in session and redirect to sample page-1
     if ($user_matched > 0) {
         $_SESSION["email"] = $email;
-        header("location: options.php");
+        header("location: page-2.php");
     } else {
         echo "User email or password is not matched <br/><br/>";
     }
-}
+}*/
 ?>
 <!doctype html>
 <html class="no-js" lang="zxx">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Login</title>
+    <title> Beauty Preferences</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -69,37 +69,102 @@ if (isset($_POST['login'])) {
     <!-- Preloader Start-->
 
 
-    <main class="login-body" data-vide-bg="assets/img/login-bg.mp4">
-        <!-- Login Admin -->
-        <div class="logInForm">
-        <form class="form-default" action="login.php" method="POST">
-    
-            <div class="login-form">
-                <!-- logo-login -->
-                <div class="logo-login">
-                    <a href="index.php"><img src="assets/img/logo/loder.png" alt=""></a>
-                </div>
-                <h2>Login Here</h2>
-                <div class="form-input">
-                    <label for="name">Email</label>
-                    <input  type="email" name="email" id="email" placeholder="Email">
-                </div>
-                <div class="form-input">
-                    <label for="name">Password</label>
-                    <input type="password" name="password" id="password" placeholder="Password">
-                </div>
-                <div class="form-input pt-30">
-                    <input type="submit" name="login" value="Login">
-                </div>
-                
-                <!-- Register -->
-                <a href="register.php" class="registration">Registration</a>
-            </div>
-        </form>
-        </div>
+<!-- Register -->
 
-        <!-- /end login form -->
-    </main>
+<main class="login-body" data-vide-bg="assets/img/login-bg.mp4">
+    <!-- Login Admin -->
+    <div class="form">
+    <form class="form-default" action="beauty.php" method="POST"  >
+        <div class="login-form">
+            <!-- logo-login -->
+            <div class="logo-login">
+                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+            </div>
+            <h2>Beauty</h2>
+            <input type="hidden" id="email" name="email" value="email">
+            <div class="form-input">
+            <label for="hytpe">Select your Skin Type:</label><br>
+            <select name="stype" id="stype">
+                <option value="dry">dry</option>
+                <option value="normal">normal</option>
+                <option value="oily">oily</option>
+                <option value="combination">combination</option>
+                <option value="sensitive">sensitive</option>
+            </select>
+            </select>
+            <br><br>
+            </div>
+            <div class="form-input">
+            <label for="utone">Select your undertone:</label><br>
+            <select name="utone" id="utone">
+                <option value="warm">warm</option>
+                <option value="cold">cold</option>
+                <option value="neutral">neutral</option>
+            </select>
+            <br><br>
+            </div>
+            <div class="form-input">
+            <label for="stone">Select your skin tone:</label><br>
+            <select name="stone" id="stone">
+                <option value="porcelain">porcelain</option>
+                <option value="light">light</option>
+                <option value="medium">medium</option>
+                <option value="mediumtan">medium tan</option>
+                <option value="sienna">sienna</option>
+                <option value="amber">amber</option>
+                <option value="tan">tan</option>
+                <option value="deep">deep</option>
+                <option value="mocha">mocha</option>
+                <option value="espresso">espresso</option>
+            </select>
+            <br><br>
+            </div>
+            <div class="form-input">
+            <label for="hytpe">Usual makeup style:</label><br>
+            <select name="mstyle" id="mstyle">
+                <option value="simple">simple</option>
+                <option value="dramatic">dramatic</option>
+                <option value="other">other</option>
+            </select>
+            </div>
+            <br><br>
+            <div class="form-input">
+                <label for="bnotes">Beauty notes</label>
+                <input type="text" name="bnotes" placeholder="Allergies, skincare routine etc">
+            </div>
+            <div class="form-input pt-30">
+                <input type="submit" name="beautypref" value="Submit">
+            </div>
+        </div>
+        <?php
+        //including the database connection file
+        include_once("db-config.php");
+
+        // Check If form submitted, insert user data into database.
+        if (isset($_POST['beautypref'])) {
+            $stype = $_POST['stype'];
+            $utone = $_POST['utone'];
+            $stone = $_POST['stone'];
+            $mstyle = $_POST['mstyle'];
+            $bnotes = $_POST['bnotes'];
+
+                // Insert user data into database
+                $result   = mysqli_query($mysqli, "INSERT INTO beautypref(stype, utone, stone, mstyle, bnotes) VALUES('$stype','$utone','$stone', '$mstyle', '$bnotes')");
+
+                // check if user data inserted successfully.
+                if ($result) {
+                    echo "<br/><br/> Beauty preferences added.";
+                } else {
+                    echo "Preference addition error. Please try again." . mysqli_error($mysqli);
+                }
+            }
+        
+
+        ?>
+    </form>
+    </div>
+    <!-- /end login form -->
+</main>
 
 
     <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>

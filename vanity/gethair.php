@@ -1,30 +1,10 @@
 <?php
-//adapted from https://gitlab.com/tutorialsclass/php-simple-login-registration-script
-// Start PHP session at the beginning 
 session_start();
 
-// Create database connection using config file
-include_once("db-config.php");
-
-// If form submitted, collect email and password from form
-if (isset($_POST['login'])) {
-    $email    = $_POST['email'];
-    $password = $_POST['password'];
-
-    // Check if a user exists with given username & password
-    $result = mysqli_query($mysqli, "select 'email', 'password' from users
-        where email='$email' and password='$password'");
-
-    // Count the number of user/rows returned by query 
-    $user_matched = mysqli_num_rows($result);
-
-    // Check If user matched/exist, store user email in session and redirect to sample page-1
-    if ($user_matched > 0) {
-        $_SESSION["email"] = $email;
-        header("location: options.php");
-    } else {
-        echo "User email or password is not matched <br/><br/>";
-    }
+// This page can be accessed only after login
+// Redirect user to login page, if user email is not available in session
+if (!isset($_SESSION["email"])) {
+    header("location: gethair.php");
 }
 ?>
 <!doctype html>
@@ -32,7 +12,7 @@ if (isset($_POST['login'])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Login</title>
+    <title> Hair Preferences</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -69,37 +49,60 @@ if (isset($_POST['login'])) {
     <!-- Preloader Start-->
 
 
-    <main class="login-body" data-vide-bg="assets/img/login-bg.mp4">
-        <!-- Login Admin -->
-        <div class="logInForm">
-        <form class="form-default" action="login.php" method="POST">
-    
-            <div class="login-form">
-                <!-- logo-login -->
-                <div class="logo-login">
-                    <a href="index.php"><img src="assets/img/logo/loder.png" alt=""></a>
-                </div>
-                <h2>Login Here</h2>
-                <div class="form-input">
-                    <label for="name">Email</label>
-                    <input  type="email" name="email" id="email" placeholder="Email">
-                </div>
-                <div class="form-input">
-                    <label for="name">Password</label>
-                    <input type="password" name="password" id="password" placeholder="Password">
-                </div>
-                <div class="form-input pt-30">
-                    <input type="submit" name="login" value="Login">
-                </div>
-                
-                <!-- Register -->
-                <a href="register.php" class="registration">Registration</a>
-            </div>
-        </form>
-        </div>
+<!-- Register -->
+<body class="bg-dark">
 
-        <!-- /end login form -->
-    </main>
+<div class="container">
+    <div class="row">
+        <div class="col m-auto">
+            <div class="card mt-5">
+                <table class="table table-bordered">
+                    <!--adapted from https://www.onlineittuts.com/fetch-data-database-in-php.html -->
+                    <tr>
+                        <td> Email </td>
+                        <td> Hair Type </td>
+                        <td> Hair Thickness </td>
+                        <td> Hair Length </td>
+                        <td> Scalp </td>
+                        <td> Notes </td>
+                    </tr>
+
+                    <?php 
+
+                        include('db-config.php');
+                        $query = "SELECT * FROM hair_pref";
+
+                    $result = mysqli_query($con, $query);
+
+                            while($row=mysqli_fetch_assoc($result))
+                            {
+                                $email = $row['email'];
+                                $hair_type = $row['hair_type'];
+                                $hair_thickness = $row['hair_thickness'];
+                                $hair_length = $row['hair_length'];
+                                $scalp = $row['scalp'];
+                                $hair_notes = $row['hair_notes'];
+                    ?>
+                            <tr>
+                                <td><?php echo $email ?></td>
+                                <td><?php echo $hair_type ?></td>
+                                <td><?php echo $hair_thickness ?></td>
+                                <td><?php echo $hair_length ?></td>
+                                <td><?php echo $scalp ?></td>
+                                <td><?php echo $hair_notes ?></td>
+                            </tr>        
+                    <?php 
+                            }  
+                    ?>                                                                    
+                           
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- /end login form -->
+</main>
 
 
     <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
