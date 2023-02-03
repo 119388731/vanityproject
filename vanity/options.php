@@ -130,7 +130,7 @@ if (!isset($_SESSION["email"])) {
                     <div class="section-tittle section-tittle2 mb-55">
                         <div class="front-text">
                             <h2 class="">Make you service simplier</h2>
-                            <p>Enter all your requirementss and prefernces prior to your appointment to guarantee the best results!</p>
+                            <p>Enter all your requirements and prefernces prior to your appointment to guarantee the best results!</p>
                         </div>
                     </div>
                     <div class="single-features">

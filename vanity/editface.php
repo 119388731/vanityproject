@@ -154,7 +154,7 @@ if (!isset($_SESSION["email"])) {
                 <input type="text" name="face_notes" placeholder="Allergies, concerns, etc">
             </div>
             <div class="form-input pt-30">
-                <input type="submit" name="submit" value="Submit">
+                <input type="submit" name="update" value="update">
             </div>
         </div>
         <?php
@@ -162,7 +162,7 @@ if (!isset($_SESSION["email"])) {
         include_once("db-config.php");
 
         // Check If form submitted, insert user data into database.
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['update'])) {
             $email = $_SESSION['email'];
             $foundation_type = $_POST['foundation_type'];
             $foundation_finish = $_POST['foundation_finish'];
@@ -177,12 +177,13 @@ if (!isset($_SESSION["email"])) {
             $face_notes = $_POST['face_notes'];
 
                 // Insert user data into database
-                $result   = mysqli_query($con, "INSERT INTO face_pref(email, foundation_type, foundation_finish, coverage, concealer_type, blush_type, contour_type, face_brand, concealer_brand, blush_brand, contour_brand, face_notes) 
-                VALUES('$email', '$foundation_type','$foundation_finish','$coverage', '$concealer_type', '$blush_type','$contour_type','$face_brand', '$concealer_brand', '$blush_brand', '$contour_brand', '$face_notes')");
+                $result   = mysqli_query($con, "UPDATE face_pref SET foundation_type='$foundation_type', foundation_finish='$foundation_finish', coverage='$coverage', 
+                concealer_type='$concealer_type', blush_type='$blush_type', contour_type= '$contour_type',
+                 face_brand='$face_brand', concealer_brand='$concealer_brand', blush_brand='$blush_brand', contour_brand='$contour_brand', face_notes='$face_notes' WHERE email=$email'");
 
                 // check if user data inserted successfully.
                 if ($result) {
-                    echo "<br/><br/> Face preferences added.";
+                    echo "<br/><br/> Face preferences updated.";
                 } else {
                     echo "Preference addition error. Please try again." . mysqli_error($con);
                 }

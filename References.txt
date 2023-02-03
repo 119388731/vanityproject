@@ -1,0 +1,13 @@
+# vanityproject
+ emma crowley 
+ 119388731
+ bis iv
+
+References
+BOOTSTRAP: https://themewagon.com/themes/free-bootstrap-4-html5-education-website-template-courses/
+DATABASE (connection/login/logout/register/insert): https://gitlab.com/tutorialsclass/php-simple-login-registration-script/-/tree/master
+DATABASE (fetch):  https://www.onlineittuts.com/fetch-data-database-in-php.html
+SELECT: https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_select
+HASH PASSWORD: //hash password for security https://www.webslesson.info/2016/10/php-login-registration-form-with-md5-password-encryption.html 
+NAIL HEALTH QUIZ: https://www.butterlondon.com/blogs/quizzes/nail-care-quiz
+UPDATE/DELETE: https://www.onlineittuts.com/insert-update-delete-in-php.html 

@@ -1,31 +1,11 @@
 <?php
-/*
-// Start PHP session at the beginning 
 session_start();
 
-// Create database connection using config file
-include_once("db-config.php");
-
-// If form submitted, collect email and password from form
-if (isset($_POST['login'])) {
-    $email    = $_POST['email'];
-    $password = $_POST['password'];
-
-    // Check if a user exists with given username & password
-    $result = mysqli_query($mysqli, "select 'email', 'password' from users
-        where email='$email' and password='$password'");
-
-    // Count the number of user/rows returned by query 
-    $user_matched = mysqli_num_rows($result);
-
-    // Check If user matched/exist, store user email in session and redirect to sample page-1
-    if ($user_matched > 0) {
-        $_SESSION["email"] = $email;
-        header("location: page-2.php");
-    } else {
-        echo "User email or password is not matched <br/><br/>";
-    }
-}*/
+// This page can be accessed only after login
+// Redirect user to login page, if user email is not available in session
+if (!isset($_SESSION["email"])) {
+    header("location: login.php");
+}
 ?>
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -83,20 +63,20 @@ if (isset($_POST['login'])) {
             <h2>Beauty</h2>
             <input type="hidden" id="email" name="email" value="email">
             <div class="form-input">
-            <label for="hytpe">Select your Skin Type:</label><br>
-            <select name="stype" id="stype">
-                <option value="dry">dry</option>
-                <option value="normal">normal</option>
-                <option value="oily">oily</option>
-                <option value="combination">combination</option>
-                <option value="sensitive">sensitive</option>
+            <label for="skin_type">Select your skin type:</label><br>
+            <select name="skin_type" id="skin_type">
+                <option value="skin_dry">dry</option>
+                <option value="skin_normal">normal</option>
+                <option value="skin_oily">oily</option>
+                <option value="skin_combination">combination</option>
+                <option value="skin_sensitive">sensitive</option>
             </select>
             </select>
             <br><br>
             </div>
             <div class="form-input">
-            <label for="utone">Select your undertone:</label><br>
-            <select name="utone" id="utone">
+            <label for="undertone">Select your undertone:</label><br>
+            <select name="undertone" id="undertone">
                 <option value="warm">warm</option>
                 <option value="cold">cold</option>
                 <option value="neutral">neutral</option>
@@ -104,8 +84,8 @@ if (isset($_POST['login'])) {
             <br><br>
             </div>
             <div class="form-input">
-            <label for="stone">Select your skin tone:</label><br>
-            <select name="stone" id="stone">
+            <label for="skintone">Select your skin tone:</label><br>
+            <select name="skintone" id="skintone">
                 <option value="porcelain">porcelain</option>
                 <option value="light">light</option>
                 <option value="medium">medium</option>
@@ -120,8 +100,8 @@ if (isset($_POST['login'])) {
             <br><br>
             </div>
             <div class="form-input">
-            <label for="hytpe">Usual makeup style:</label><br>
-            <select name="mstyle" id="mstyle">
+            <label for="makeup_type">Usual makeup style:</label><br>
+            <select name="makeup_type" id="makeup_type">
                 <option value="simple">simple</option>
                 <option value="dramatic">dramatic</option>
                 <option value="other">other</option>
@@ -129,11 +109,11 @@ if (isset($_POST['login'])) {
             </div>
             <br><br>
             <div class="form-input">
-                <label for="bnotes">Beauty notes</label>
-                <input type="text" name="bnotes" placeholder="Allergies, skincare routine etc">
+                <label for="beauty_notes">Beauty notes</label>
+                <input type="text" name="beauty_notes" placeholder="Allergies, skincare routine etc">
             </div>
             <div class="form-input pt-30">
-                <input type="submit" name="beautypref" value="Submit">
+                <input type="submit" name="submit" value="Submit">
             </div>
         </div>
         <?php
@@ -141,21 +121,22 @@ if (isset($_POST['login'])) {
         include_once("db-config.php");
 
         // Check If form submitted, insert user data into database.
-        if (isset($_POST['beautypref'])) {
-            $stype = $_POST['stype'];
-            $utone = $_POST['utone'];
-            $stone = $_POST['stone'];
-            $mstyle = $_POST['mstyle'];
-            $bnotes = $_POST['bnotes'];
+        if (isset($_POST['submit'])) {
+            $email = $_SESSION['email'];
+            $skin_type = $_POST['skin_type'];
+            $undertone = $_POST['undertone'];
+            $skintone = $_POST['skintone'];
+            $makeup_type = $_POST['makeup_type'];
+            $beauty_notes = $_POST['beauty_notes'];
 
                 // Insert user data into database
-                $result   = mysqli_query($mysqli, "INSERT INTO beautypref(stype, utone, stone, mstyle, bnotes) VALUES('$stype','$utone','$stone', '$mstyle', '$bnotes')");
+                $result   = mysqli_query($con, "INSERT INTO beauty_pref(email, skin_type, undertone, skintone, makeup_type, beauty_notes) VALUES('$email','$skin_type','$undertone','$skintone', '$makeup_type', '$beauty_notes')");
 
                 // check if user data inserted successfully.
                 if ($result) {
                     echo "<br/><br/> Beauty preferences added.";
                 } else {
-                    echo "Preference addition error. Please try again." . mysqli_error($mysqli);
+                    echo "Preference addition error. Please try again." . mysqli_error($con);
                 }
             }
         

@@ -12,7 +12,7 @@ if (isset($_POST['login'])) {
     $password = $_POST['password'];
 
     // Check if a user exists with given username & password
-    $result = mysqli_query($mysqli, "select 'email', 'password' from users
+    $result = mysqli_query($con, "select 'email', 'password' from users
         where email='$email' and password='$password'");
 
     // Count the number of user/rows returned by query 

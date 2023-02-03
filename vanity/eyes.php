@@ -1,30 +1,10 @@
 <?php
-
-// Start PHP session at the beginning 
 session_start();
 
-// Create database connection using config file
-include_once("db-config.php");
-
-// If form submitted, collect email and password from form
-if (isset($_POST['login'])) {
-    $email    = $_POST['email'];
-    $password = $_POST['password'];
-
-    // Check if a user exists with given username & password
-    $result = mysqli_query($mysqli, "select 'email', 'password' from users
-        where email='$email' and password='$password'");
-
-    // Count the number of user/rows returned by query 
-    $user_matched = mysqli_num_rows($result);
-
-    // Check If user matched/exist, store user email in session and redirect to sample page-1
-    if ($user_matched > 0) {
-        $_SESSION["email"] = $email;
-        header("location: page-2.php");
-    } else {
-        echo "User email or password is not matched <br/><br/>";
-    }
+// This page can be accessed only after login
+// Redirect user to login page, if user email is not available in session
+if (!isset($_SESSION["email"])) {
+    header("location: login.php");
 }
 ?>
 <!doctype html>
@@ -85,8 +65,8 @@ if (isset($_POST['login'])) {
             <h2>Eyes</h2>
             <input type="hidden" id="email" name="email" value="email">
             <div class="form-input">
-            <label for="eshape">Select your eye shape:</label><br>
-            <select name="eshape" id="eshape">
+            <label for="eye_shape">Select your eye shape:</label><br>
+            <select name="eye_shape" id="eye_shape">
                 <option value="almond">almond</option>
                 <option value="round">round </option>
                 <option value="downturned">downturned</option>
@@ -97,8 +77,8 @@ if (isset($_POST['login'])) {
             <br><br>
             </div>
             <div class="form-input">
-            <label for="ecolour">Select your eye colour:</label><br>
-            <select name="ecolour" id="ecolour">
+            <label for="eye_colour">Select your eye colour:</label><br>
+            <select name="eye_colour" id="eye_colour">
                 <option value="amber">amber</option>
                 <option value="blue">blue</option>
                 <option value="brown">brown</option>
@@ -122,8 +102,8 @@ if (isset($_POST['login'])) {
             <br><br>
             </div>
             <div class="form-input">
-            <label for="linertype">Select your Eyeliner Type:</label><br>
-            <select name="linertype" id="linertype">
+            <label for="liner_type">Select your Eyeliner Type:</label><br>
+            <select name="liner_type" id="liner_type">
                 <option value="pencil">pencil</option>
                 <option value="liquid">liquid</option>
                 <option value="marker">marker</option>
@@ -134,8 +114,8 @@ if (isset($_POST['login'])) {
             </div>
             <br><br>
             <div class="form-input">
-            <label for="lashtype">Select your lash Type:</label><br>
-            <select name="lashtype" id="lashtype">
+            <label for="lash_type">Select your lash Type:</label><br>
+            <select name="lash_type" id="lash_type">
                 <option value="classic">classic</option>
                 <option value="volume">volume</option>
                 <option value="hybrid">hybrid</option>
@@ -145,23 +125,23 @@ if (isset($_POST['login'])) {
             </div>
             <br><br>
             <div class="form-input">
-                <label for="ebs">Please list your favourite eyeshadow brands and palettes:</label>
-                <input type="text" name="ebs" placeholder="EG: BeautyBay: Bright 42 Colour Palette">
+                <label for="eyeshadow_brand">Please list your favourite eyeshadow brands and palettes:</label>
+                <input type="text" name="eyeshadow_brand" placeholder="EG: BeautyBay: Bright 42 Colour Palette">
             </div>
             <div class="form-input">
-                <label for="elbs">Please list your favourite eyeliner brands and shades:</label>
-                <input type="text" name="elbs" placeholder="EG: NYX Epic Wear Long Lasting Liner Stick - Pitch Black">
+                <label for="eyeliner_brand">Please list your favourite eyeliner brands and shades:</label>
+                <input type="text" name="eyeliner_brand" placeholder="EG: NYX Epic Wear Long Lasting Liner Stick - Pitch Black">
             </div>
             <div class="form-input">
-                <label for="eybs">Please list your lash brands and shades:</label>
-                <input type="text" name="eybs" placeholder="EG: BPerfect Power Universal Lash">
+                <label for="lash_brand">Please list your lash brands and shades:</label>
+                <input type="text" name="lash_brand" placeholder="EG: BPerfect Power Universal Lash">
             </div>
             <div class="form-input">
-                <label for="enotes">Eye notes</label>
-                <input  type="text" name="enotes" placeholder="Sensivity, allergires etc">
+                <label for="eye_notes">Eye notes</label>
+                <input  type="text" name="eye_notes" placeholder="Sensivity, allergies etc">
             </div>
             <div class="form-input pt-30">
-                <input type="submit" name="eyepref" value="Submit">
+                <input type="submit" name="submit" value="Submit">
             </div>
         </div>
         <?php
@@ -169,25 +149,26 @@ if (isset($_POST['login'])) {
         include_once("db-config.php");
 
         // Check If form submitted, insert user data into database.
-        if (isset($_POST['eyepref'])) {
-            $eshape = $_POST['eshape'];
-            $ecolour = $_POST['ecolour'];
+        if (isset($_POST['submit'])) {
+            $email = $_SESSION['email'];
+            $eye_shape = $_POST['eye_shape'];
+            $eye_colour = $_POST['eye_colour'];
             $colourway = $_POST['colourway'];
-            $linertype = $_POST['linertype'];
-            $lashtype = $_POST['lashtype'];
-            $ebs = $_POST['ebs'];
-            $elbs = $_POST['elbs'];
-            $eybs = $_POST['eybs'];
-            $enotes = $_POST['enotes'];
+            $liner_type = $_POST['liner_type'];
+            $lash_type = $_POST['lashtlash_typeype'];
+            $eyeshadow_brand = $_POST['eyeshadow_brand'];
+            $eyeliner_brand = $_POST['eyeliner_brand'];
+            $lash_brand = $_POST['lash_brand'];
+            $eye_notes = $_POST['eye_notes'];
 
                 // Insert user data into database
-                $result   = mysqli_query($mysqli, "INSERT INTO eyepref(eshape, ecolour, colourway, linertype, lashtype, ebs, elbs, eybs, enotes) VALUES('$eshape','$ecolour','$colourway', '$linertype', '$lashtype', '$ebs','$elbs','$eybs', '$enotes')");
+                $result   = mysqli_query($con, "INSERT INTO eye_pref(email, eye_shape, eye_colour, colourway, liner_type, lash_type, eyeshadow_brand, eyeliner_brand, lash_brand, eye_notes) VALUES('$email','$eye_shape','$eye_colour','$colourway', '$liner_type', '$lash_type', '$eyeshadow_brand','$eyeliner_brand','$lash_brand', '$eye_notes')");
 
                 // check if user data inserted successfully.
                 if ($result) {
                     echo "<br/><br/> Eye preferences added.";
                 } else {
-                    echo "Preference addition error. Please try again." . mysqli_error($mysqli);
+                    echo "Preference addition error. Please try again." . mysqli_error($con);
                 }
             }
         ?>

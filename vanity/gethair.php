@@ -4,7 +4,7 @@ session_start();
 // This page can be accessed only after login
 // Redirect user to login page, if user email is not available in session
 if (!isset($_SESSION["email"])) {
-    header("location: gethair.php");
+    header("location: login.php");
 }
 ?>
 <!doctype html>
@@ -70,8 +70,8 @@ if (!isset($_SESSION["email"])) {
                     <?php 
 
                         include('db-config.php');
-                        $query = "SELECT * FROM hair_pref";
-
+                    $query = "SELECT * FROM hair_pref";
+                    
                     $result = mysqli_query($con, $query);
 
                             while($row=mysqli_fetch_assoc($result))
@@ -90,6 +90,8 @@ if (!isset($_SESSION["email"])) {
                                 <td><?php echo $hair_length ?></td>
                                 <td><?php echo $scalp ?></td>
                                 <td><?php echo $hair_notes ?></td>
+                                <td><a href="edithair.php" class="btn btn-pencil">Edit</a></td>
+                                <td><a href="deletehair.php" class="btn btn-danger">Delete</a></td>
                             </tr>        
                     <?php 
                             }  

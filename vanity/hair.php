@@ -4,7 +4,7 @@ session_start();
 // This page can be accessed only after login
 // Redirect user to login page, if user email is not available in session
 if (!isset($_SESSION["email"])) {
-    header("location: hair.php");
+    header("location: login.php");
 }
 ?>
 <!doctype html>
@@ -126,13 +126,13 @@ if (!isset($_SESSION["email"])) {
             $hair_notes = $_POST['hair_notes'];
 
                 // Insert user data into database
-                $result   = mysqli_query($mysqli, "INSERT INTO hair_pref(email, hair_type, hair_thickness, scalp, hair_length, hair_notes) VALUES('$email','$hair_type','$hair_thickness','$scalp', '$hair_length', '$hair_notes')");
+                $result   = mysqli_query($con, "INSERT INTO hair_pref(email, hair_type, hair_thickness, scalp, hair_length, hair_notes) VALUES('$email','$hair_type','$hair_thickness','$scalp', '$hair_length', '$hair_notes')");
 
                 // check if user data inserted successfully.
                 if ($result) {
                     echo "<br/><br/> Hair preferences added.";
                 } else {
-                    echo "Preference addition error. Please try again." . mysqli_error($mysqli);
+                    echo "Preference addition error. Please try again." . mysqli_error($con);
                 }
             }
         

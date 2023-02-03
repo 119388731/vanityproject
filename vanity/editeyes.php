@@ -12,7 +12,7 @@ if (!isset($_SESSION["email"])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Face Preferences</title>
+    <title> Nail Preferences</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -54,7 +54,7 @@ if (!isset($_SESSION["email"])) {
 <main class="login-body" data-vide-bg="assets/img/login-bg.mp4">
     <!-- Login Admin -->
     <div class="form">
-    <form class="form-default" action="face.php" method="POST"  >
+    <form class="form-default" action="editeyes.php" method="POST"  >
    
         
         <div class="login-form">
@@ -62,99 +62,86 @@ if (!isset($_SESSION["email"])) {
             <div class="logo-login">
                 <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
             </div>
-            <h2>Face</h2>
+            <h2>Eyes</h2>
             <input type="hidden" id="email" name="email" value="email">
             <div class="form-input">
-            <label for="foundation_type">Select your usual foundation type:</label><br>
-            <select name="foundation_type" id="foundation_type">
-                <option value="foundation_liquid">liquid</option>
-                <option value="foundation_cream">cream</option>
-                <option value="foundation_mousse">whipped mousse</option>
-                <option value="foundation_stick">stick</option>
-                <option value="foundation_powder">powder</option>
-                <option value="foundation_tint">tinted moistuizer</option>
-                <option value="foundation_bb">bb cream</option>
-                <option value="foundation_cc">cc cream</option>
+            <label for="eye_shape">Select your eye shape:</label><br>
+            <select name="eye_shape" id="eye_shape">
+                <option value="almond">almond</option>
+                <option value="round">round </option>
+                <option value="downturned">downturned</option>
+                <option value="upturned">upturned</option>
+                <option value="hooded">hooded</option>
+                <option value="monolid">monolid</option>
             </select>
             <br><br>
             </div>
             <div class="form-input">
-            <label for="foundation_finish">Select your preferred foundation finish:</label><br>
-            <select name="foundation_finish" id="foundation_finish">
-                <option value="sheer">sheer</option>
-                <option value="dewy">dewy</option>
-                <option value="natrual">natrual</option>
-                <option value="satin">satin</option>
-                <option value="radiant">radiant</option>
-                <option value="matte">matte</option>
+            <label for="eye_colour">Select your eye colour:</label><br>
+            <select name="eye_colour" id="eye_colour">
+                <option value="amber">amber</option>
+                <option value="blue">blue</option>
+                <option value="brown">brown</option>
+                <option value="grey">grey</option>
+                <option value="green">green</option>
+                <option value="hazel">hazel</option>
             </select>
             <br><br>
             </div>
             <div class="form-input">
-            <label for="coverage">Select your preferred coverage:</label><br>
-            <select name="coverage" id="coverage">
-                <option value="coverage_light">light</option>
-                <option value="coverage_medium">medium</option>
-                <option value="coverage_full">full</option>
+            <label for="colourway">Select your preferred eyeshadow colourway:</label><br>
+            <select name="colourway" id="colourway">
+                <option value="neon">neon</option>
+                <option value="warm">warm</option>
+                <option value="cool">cool</option>
+                <option value="nude">nude</option>
+                <option value="pastel">pastel</option>
+                <label for="colournotes">Other:</label>
+                <input type="text" name="colourway" placeholder="Other">
             </select>
             <br><br>
             </div>
             <div class="form-input">
-            <label for="concealer_type">Select your usual concealer type:</label><br>
-            <select name="concealer_type" id="concealer_type">
-                <option value="concealer_liquid">liquid</option>
-                <option value="concealer_cream">cream</option>
-                <option value="concealer_stick">stick</option>
-                <option value="concealer_powder">powder</option>
-                <option value="concealer_ctp">cream to powder</option>
-                <option value="concealer_cc">colour correcting</option>
+            <label for="liner_type">Select your Eyeliner Type:</label><br>
+            <select name="liner_type" id="liner_type">
+                <option value="pencil">pencil</option>
+                <option value="liquid">liquid</option>
+                <option value="marker">marker</option>
+                <option value="gel">gel</option>
+                <option value="shadow">shadow</option>
+                <input type="text" name="colournotes" placeholder="Other">
             </select>
-            <br><br>
             </div>
+            <br><br>
             <div class="form-input">
-            <label for="blush_type">Select your usual blush type:</label><br>
-            <select name="blush_type" id="blush_type">
-                <option value="blush_liquid">liquid</option>
-                <option value="blush_cream">cream</option>
-                <option value="blush_stick">stick</option>
-                <option value="blush_powder">pressed powder</option>
-                <option value="blush_lpowder">loose powder</option>
-                <option value="blush_stain">stain</option>
+            <label for="lash_type">Select your lash Type:</label><br>
+            <select name="lash_type" id="lash_type">
+                <option value="classic">classic</option>
+                <option value="volume">volume</option>
+                <option value="hybrid">hybrid</option>
+                <option value="dramatic">dramatic</option>
+                <input type="text" name="colournotes" placeholder="Other">
             </select>
+            </div>
             <br><br>
+            <div class="form-input">
+                <label for="eyeshadow_brand">Please list your favourite eyeshadow brands and palettes:</label>
+                <input type="text" name="eyeshadow_brand" placeholder="EG: BeautyBay: Bright 42 Colour Palette">
             </div>
             <div class="form-input">
-            <label for="contour_type">Select your usual contour type:</label><br>
-            <select name="contour_type" id="contour_type">
-                <option value="contour_liquid">liquid</option>
-                <option value="contour_cream">cream</option>
-                <option value="contour_stick">stick</option>
-                <option value="contour_powder"> powder</option>
-            </select>
-            <br><br>
+                <label for="eyeliner_brand">Please list your favourite eyeliner brands and shades:</label>
+                <input type="text" name="eyeliner_brand" placeholder="EG: NYX Epic Wear Long Lasting Liner Stick - Pitch Black">
             </div>
             <div class="form-input">
-                <label for="face_brand">Please list your favourite foundation brands and shades:</label>
-                <input type="text" name="face_brand" placeholder="EG: Fenty Pro Filt'r: 260 Neutral">
+                <label for="lash_brand">Please list your lash brands and shades:</label>
+                <input type="text" name="lash_brand" placeholder="EG: BPerfect Power Universal Lash">
             </div>
             <div class="form-input">
-                <label for="concealer_brand">Please list your favourite concealer brands and shades:</label>
-                <input type="text" name="concealer_brand" placeholder="EG: MAC Select Cover-Up: NC30">
-            </div>
-            <div class="form-input">
-                <label for="blush_brand">Please list your blush brands and shades:</label>
-                <input type="text" name="blush_brand" placeholder="EG: Made By Mitchell Blursh Liquid Blusher: Peach Sugar">
-            </div>
-            <div class="form-input">
-                <label for="contour_brand">Please list your contour brands and shades:</label>
-                <input type="text" name="contour_brand" placeholder="EG: HUDA BEAUTY Tantour: Medium">
-            </div>
-            <div class="form-input">
-                <label for="face_notes">Face makeup notes:</label>
-                <input type="text" name="face_notes" placeholder="Allergies, concerns, etc">
+                <label for="eye_notes">Eye notes</label>
+                <input  type="text" name="eye_notes" placeholder="Sensivity, allergies etc">
             </div>
             <div class="form-input pt-30">
-                <input type="submit" name="submit" value="Submit">
+                <input type="submit" name="update" value="update">
             </div>
         </div>
         <?php
@@ -162,33 +149,28 @@ if (!isset($_SESSION["email"])) {
         include_once("db-config.php");
 
         // Check If form submitted, insert user data into database.
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['update'])) {
             $email = $_SESSION['email'];
-            $foundation_type = $_POST['foundation_type'];
-            $foundation_finish = $_POST['foundation_finish'];
-            $coverage = $_POST['coverage'];
-            $concealer_type = $_POST['concealer_type'];
-            $blush_type = $_POST['blush_type'];
-            $contour_type = $_POST['contour_type'];
-            $face_brand = $_POST['face_brand'];
-            $concealer_brand = $_POST['concealer_brand'];
-            $blush_brand = $_POST['blush_brand'];
-            $contour_brand = $_POST['contour_brand'];
-            $face_notes = $_POST['face_notes'];
+            $eye_shape = $_POST['eye_shape'];
+            $eye_colour = $_POST['eye_colour'];
+            $colourway = $_POST['colourway'];
+            $liner_type = $_POST['liner_type'];
+            $lash_type = $_POST['lashtlash_typeype'];
+            $eyeshadow_brand = $_POST['eyeshadow_brand'];
+            $eyeliner_brand = $_POST['eyeliner_brand'];
+            $lash_brand = $_POST['lash_brand'];
+            $eye_notes = $_POST['eye_notes'];
 
                 // Insert user data into database
-                $result   = mysqli_query($con, "INSERT INTO face_pref(email, foundation_type, foundation_finish, coverage, concealer_type, blush_type, contour_type, face_brand, concealer_brand, blush_brand, contour_brand, face_notes) 
-                VALUES('$email', '$foundation_type','$foundation_finish','$coverage', '$concealer_type', '$blush_type','$contour_type','$face_brand', '$concealer_brand', '$blush_brand', '$contour_brand', '$face_notes')");
+                $result   = mysqli_query($con, "UPDATE eye_pref SET eye_shape='$eye_shape', eye_colour='$eye_colour', colourway='$colourway', liner_type= '$liner_type', lash_type='$lash_type', eyeshadow_brand='$eyeshadow_brand', eyeliner_brand='$eyeliner_brand', lash_brand='$lash_brand', eye_notes='$eye_notes' WHERE email='$email'");
 
                 // check if user data inserted successfully.
                 if ($result) {
-                    echo "<br/><br/> Face preferences added.";
+                    echo "<br/><br/> Eye preferences updated.";
                 } else {
                     echo "Preference addition error. Please try again." . mysqli_error($con);
                 }
             }
-        
-
         ?>
     </form>
     </div>

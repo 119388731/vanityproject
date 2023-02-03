@@ -1,31 +1,11 @@
 <?php
-/*
-// Start PHP session at the beginning 
 session_start();
 
-// Create database connection using config file
-include_once("db-config.php");
-
-// If form submitted, collect email and password from form
-if (isset($_POST['login'])) {
-    $email    = $_POST['email'];
-    $password = $_POST['password'];
-
-    // Check if a user exists with given username & password
-    $result = mysqli_query($mysqli, "select 'email', 'password' from users
-        where email='$email' and password='$password'");
-
-    // Count the number of user/rows returned by query 
-    $user_matched = mysqli_num_rows($result);
-
-    // Check If user matched/exist, store user email in session and redirect to sample page-1
-    if ($user_matched > 0) {
-        $_SESSION["email"] = $email;
-        header("location: page-2.php");
-    } else {
-        echo "User email or password is not matched <br/><br/>";
-    }
-}*/
+// This page can be accessed only after login
+// Redirect user to login page, if user email is not available in session
+if (!isset($_SESSION["email"])) {
+    header("location: login.php");
+}
 ?>
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -84,19 +64,19 @@ if (isset($_POST['login'])) {
             <h2>Nails</h2>
             <input type="hidden" id="email" name="email" value="email">
             <div class="form-input">
-            <label for="nlength">Select your Nail Length:</label><br>
-            <select name="nlength" id="nlength">
-            <option value="nvshort">very short</option>
-                <option value="nshort">short</option>
-                <option value="nmedium">medium</option>
-                <option value="nlong">long</option>
-                <option value="nvlong">very long</option>
+            <label for="nail_length">Select your Nail Length:</label><br>
+            <select name="nail_length" id="nail_length">
+                <option value="nail_vshort">very short</option>
+                <option value="nail_short">short</option>
+                <option value="nail_medium">medium</option>
+                <option value="nail_long">long</option>
+                <option value="nail_vlong">very long</option>
             </select>
             <br><br>
             </div>
             <div class="form-input">
-            <label for="ndesc">Describe your nails:</label><br>
-            <select name="ndesc" id="ndesc">
+            <label for="nail_desc">Describe your nails:</label><br>
+            <select name="nail_desc" id="nail_desc">
                 <option value="weak">weak</option>
                 <option value="normal">normal</option>
                 <option value="ridged">ridged</option>
@@ -105,11 +85,11 @@ if (isset($_POST['login'])) {
             </div>
             <br><br>
             <div class="form-input">
-                <label for="nnotes">Nail notes</label>
-                <input  type="text" name="nnotes" placeholder="Concerns, conditions etc">
+                <label for="nail_notes">Nail notes</label>
+                <input  type="text" name="nail_notes" placeholder="Concerns, conditions etc">
             </div>
             <div class="form-input pt-30">
-                <input type="submit" name="nailpref" value="Submit">
+                <input type="submit" name="submit" value="Submit">
             </div>
         </div>
         <?php
@@ -117,19 +97,20 @@ if (isset($_POST['login'])) {
         include_once("db-config.php");
 
         // Check If form submitted, insert user data into database.
-        if (isset($_POST['nailpref'])) {
-            $nlength = $_POST['nlengtgh'];
-            $ndesc = $_POST['ndesc'];
-            $nnotes = $_POST['nnotes'];
+        if (isset($_POST['submit'])) {
+            $email = $_SESSION['email'];
+            $nail_length = $_POST['nail_length'];
+            $nail_desc = $_POST['nail_desc'];
+            $nail_notes = $_POST['nail_notes'];
 
                 // Insert user data into database
-                $result   = mysqli_query($mysqli, "INSERT INTO nailpref(nlength, ndesc, nnotes) VALUES('$nlength','$ndesc','$nnotes')");
+                $result   = mysqli_query($con, "INSERT INTO nail_pref(email, nail_length, nail_desc, nail_notes) VALUES('$email', '$nail_length','$nail_desc','$nail_notes')");
 
                 // check if user data inserted successfully.
                 if ($result) {
                     echo "<br/><br/> Nail preferences added.";
                 } else {
-                    echo "Preference addition error. Please try again." . mysqli_error($mysqli);
+                    echo "Preference addition error. Please try again." . mysqli_error($con);
                 }
             }
         

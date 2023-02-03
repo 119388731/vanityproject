@@ -50,88 +50,55 @@ if (!isset($_SESSION["email"])) {
 
 
 <!-- Register -->
+<body class="bg-dark">
 
-<main class="login-body" data-vide-bg="assets/img/login-bg.mp4">
-    <!-- Login Admin -->
-    <div class="form">
-    <form class="form-default" action="nailart.php" method="POST"  >
-        <div class="login-form">
-            <!-- logo-login -->
-            <div class="logo-login">
-                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
-            </div>
-            <h2>Nail Art</h2>
-            <input type="hidden" id="email" name="email" value="email">
-            <div class="form-input">
-            <label for="nail_service">Select your usual Nail service:</label><br>
-            <select name="nail_service" id="nail_service">
-                <option value="manicure">manicure</option>
-                <option value="shellac">shellac</option>
-                <option value="gel">gel</option>
-                <option value="acrylics">acrylics</option>
-                <option value="presson">press ons</option>
-            </select>
-            <br><br>
-            </div>
-            <div class="form-input">
-            <label for="nail_shape">Select your preferred nail shape:</label><br>
-            <select name="nail_shape" id="nail_shape">
-                <option value="oval">oval</option>
-                <option value="almond">almond</option>
-                <option value="square">square</option>
-                <option value="squoval">squoval</option>
-                <option value="coffin">coffin</option>
-                <option value="stiletto">stiletto</option>
-                <option value="round">round</option>
-            </select>
-            <br><br>
-            </div>
-            <div class="form-input">
-            <label for="nail_style">Select your preferred nail style:</label><br>
-            <select name="nail_style" id="nail_style">
-                <option value="simple">simple</option>
-                <option value="frenchtip">french tip</option>
-                <option value="someart">some art</option>
-                <option value="embellished">embellished</option>
-            </select>
-            <br><br>
-            </div>
-            <br><br>
-            <div class="form-input">
-                <label for="nailart_notes">Nail art notes</label>
-                <input  type="text" name="nailart_notes" placeholder="Favourite colour, nail inspiration etc">
-            </div>
-            <div class="form-input pt-30">
-                <input type="submit" name="submit" value="Submit">
+<div class="container">
+    <div class="row">
+        <div class="col m-auto">
+            <div class="card mt-5">
+                <table class="table table-bordered">
+                    <!--adapted from https://www.onlineittuts.com/fetch-data-database-in-php.html -->
+                    <tr>
+                        <td> Email </td>
+                        <td> Nail Service </td>
+                        <td> Nail Shape </td>
+                        <td> Nail Style </td>
+                        <td> Notes </td>
+                    </tr>
+
+                    <?php 
+
+                        include('db-config.php');
+                        $query = "SELECT * FROM nailart_pref";
+
+                    $result = mysqli_query($con, $query);
+
+                            while($row=mysqli_fetch_assoc($result))
+                            {
+                                $email = $row['email'];
+                                $nail_service = $row['nail_service'];
+                                $nail_shape = $row['nail_shape'];
+                                $nail_style = $row['nail_style'];
+                                $nailart_notes = $row['nailart_notes'];
+                    ?>
+                            <tr>
+                                <td><?php echo $email ?></td>
+                                <td><?php echo $nail_service ?></td>
+                                <td><?php echo $nail_shape ?></td>
+                                <td><?php echo $nail_style ?></td>
+                                <td><?php echo $nailart_notes ?></td>
+                                <td><a href="editnailart.php" class="btn btn-pencil">Edit</a></td>
+                            </tr>        
+                    <?php 
+                            }  
+                    ?>                                                                    
+                           
+
+                </table>
             </div>
         </div>
-        <?php
-        //including the database connection file
-        include_once("db-config.php");
-
-        // Check If form submitted, insert user data into database.
-        if (isset($_POST['submit'])) {
-            $email = $_SESSION['email'];
-            $nail_service = $_POST['nail_service'];
-            $nail_shape = $_POST['nail_shape'];
-            $nail_style = $_POST['nail_style'];
-            $nailart_notes = $_POST['nailart_notes'];
-
-                // Insert user data into database
-                $result   = mysqli_query($con, "INSERT INTO nailart_pref(nail_service, nail_shape, nail_style, nail_notes) VALUES('$email','$nail_service','$nail_shape','$nail_style', '$nailart_notes')");
-
-                // check if user data inserted successfully.
-                if ($result) {
-                    echo "<br/><br/> Nail art preferences added.";
-                } else {
-                    echo "Preference addition error. Please try again." . mysqli_error($con);
-                }
-            }
-        
-
-        ?>
-    </form>
     </div>
+</div>
     <!-- /end login form -->
 </main>
 
