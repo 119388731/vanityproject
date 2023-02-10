@@ -11,3 +11,6 @@ SELECT: https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_select
 HASH PASSWORD: //hash password for security https://www.webslesson.info/2016/10/php-login-registration-form-with-md5-password-encryption.html 
 NAIL HEALTH QUIZ: https://www.butterlondon.com/blogs/quizzes/nail-care-quiz
 UPDATE/DELETE: https://www.onlineittuts.com/insert-update-delete-in-php.html 
+HAIR PROCESS: https://www.uglyducklingcolor.com/content/48-how-to-color-hair 
+HAIR SERVICE OPTIONS: https://unisalon1.gettimely.com/Booking/Location/60422?mobile=True 
+NAIL SERVICE OPTIONS: Dublinnails.com

@@ -12,7 +12,7 @@ if (!isset($_SESSION["email"])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Hair Preferences</title>
+    <title> Hair Service</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -51,65 +51,60 @@ if (!isset($_SESSION["email"])) {
 
 <!-- Register -->
 
-<main class="login-body" data-vide-bg="assets/img/login-bg.mp4">
+<main class="login-body">
     <!-- Login Admin -->
     <div class="form">
-    <form class="form-default" action="edithair.php" method="POST"  >
-   
-        
+    <form class="form-default" action="hairservice.php" method="POST"  >
+          
         <div class="login-form">
             <!-- logo-login -->
             <div class="logo-login">
                 <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
             </div>
-            <h2>Hair</h2>
-            <input type="hidden" id="email" name="email" value="email">
+            <h2>Hair Services</h2>
             <div class="form-input">
-            <label for="hair_type">Select your Hair Type:</label><br>
-            <select name="hair_type" id="hair_type">
-                <option value="hair_straight">straight</option>
-                <option value="hair_wavy">wavy</option>
-                <option value="hair_curly">curly</option>
-                <option value="hair_kinky">kinky</option>
-                <option value="hair_coily">coily</option>
-            </select>
-            <br><br>
+                <label for="customer">Customer email:</label>
+                <input type="text" name="customer">
             </div>
             <div class="form-input">
-            <label for="hair_thickness">Select your Hair Thickness:</label><br>
-            <select name="hair_thickness" id="hair_thickness">
-                <option value="hair_fine">fine</option>
-                <option value="hair_medium">medium</option>
-                <option value="hair_coarse">coarse</option>
-            </select>
-            <br><br>
+                <label for="staff">Service provider:</label>
+                <input type="text" name="staff">
             </div>
             <div class="form-input">
-            <label for="scalp">Select your Scalp conditions:</label><br>
-            <select name="scalp" id="scalp">
-                <option value="dry">dry</option>
-                <option value="normal">normal</option>
-                <option value="oily">oily</option>
-            </select>
-            <br><br>
+                <!-- hair options from: https://unisalon1.gettimely.com/Booking/Location/60422?mobile=True -->
+            <label>Cut and Blowdry:</label><br>
+            </div>
+            <div>
+            <input type="checkbox" name="cut_dry" value="cutblow" />Cut and Blowdry<br />
+            <input type="checkbox" name="cut_dry" value="blowdry" />Short - Med blowdry<br />
+            <input type="checkbox" name="cut_dry" value="blowdrylong" />Long Blowdry<br />
+            <input type="checkbox" name="cut_dry" value="blowdrycurly" />Curly Blowdry<br />
             </div>
             <div class="form-input">
-            <label for="hair_length">Select your Hair Length:</label><br>
-            <select name="hair_length" id="hair_length">
-                <option value="hair_vshort">very short</option>
-                <option value="hair_short">short</option>
-                <option value="hair_medium">medium</option>
-                <option value="hair_long">long</option>
-                <option value="hair_vlong">very long</option>
-            </select>
+            <label>Colour:</label><br>
             </div>
-            <br><br>
+            <div>
+            <input type="checkbox" name="colour" value="fullcolour" />Full colour<br />
+            <input type="checkbox" name="colour" value="root" />Root touch up<br />
+            <input type="checkbox" name="colour" value="fullmeche" />Full meche<br />
+            <input type="checkbox" name="colour" value="halfmeche" />Half meche<br />
+            <input type="checkbox" name="colour" value="balayage" />Balayage<br />
+            </div>
             <div class="form-input">
-                <label for="hair_notes">Hair notes</label>
-                <input  type="text" name="hair_notes" placeholder="Hair goals, concerns, etc">
+            <label>Gents:</label><br>
+            </div>
+            <div>
+            <input type="checkbox" name="gents" value="blowdrygents" />Gents<br />
+            <input type="checkbox" name="gents" value="dye" />Colour<br />
+            <input type="checkbox" name="gents" value="fade" />Fade<br />
+            <input type="checkbox" name="gents" value="haircut" />Cut<br />
+            </div>
+            <div class="form-input">
+                <label for="hairservice_other">Other:</label>
+                <input type="text" name="hairservice_other" placeholder="Treatments etc">
             </div>
             <div class="form-input pt-30">
-                <input type="submit" name="update" value="update">
+                <input type="submit" name="submit" value="submit">
             </div>
         </div>
         <?php
@@ -117,20 +112,20 @@ if (!isset($_SESSION["email"])) {
         include_once("db-config.php");
 
         // Check if form submitted, insert user data into database - adapted from https://gitlab.com/tutorialsclass/php-simple-login-registration-script
-        if (isset($_POST['update'])) {
-            $email = $_SESSION['email'];
-            $hair_type = $_POST['hair_type'];
-            $hair_thickness = $_POST['hair_thickness'];
-            $scalp = $_POST['scalp'];
-            $hair_length = $_POST['hair_length'];
-            $hair_notes = $_POST['hair_notes'];
+        if (isset($_POST['submit'])) {
+            $customer = $_POST['customer'];
+            $staff = $_POST['staff'];
+            $cut_dry = $_POST['cut_dry'];
+            $colour = $_POST['colour'];
+            $gents = $_POST['gents'];
+            $hairservice_other = $_POST['hairservice_other'];
 
-                // Update data into database adapted from https://www.onlineittuts.com/insert-update-delete-in-php.html
-                $result   = mysqli_query($con, "UPDATE hair_pref SET hair_type='$hair_type', hair_thickness='$hair_thickness' , scalp='$scalp' , hair_length='$hair_length' , hair_notes='$hair_notes' where email = '$email' ");
+                // Insert user data into database
+                $result   = mysqli_query($con, "INSERT INTO hair_service(customer, staff, cut_dry, colour, gents, hairservice_other) VALUES('$customer', '$staff', '$cut_dry', '$colour', '$gents', '$hairservice_other')");
 
                 // check if user data inserted successfully.
                 if ($result) {
-                    echo "<br/><br/> Hair preferences updated.";
+                    echo "<br/><br/> Hair services added.";
                 } else {
                     echo "Preference addition error. Please try again." . mysqli_error($con);
                 }

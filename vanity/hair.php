@@ -99,14 +99,14 @@ if (!isset($_SESSION["email"])) {
                 <option value="hair_vshort">very short</option>
                 <option value="hair_short">short</option>
                 <option value="hair_medium">medium</option>
-                <option value="hsir_long">long</option>
+                <option value="hair_long">long</option>
                 <option value="hair_vlong">very long</option>
             </select>
             </div>
             <br><br>
             <div class="form-input">
                 <label for="hair_notes">Hair notes</label>
-                <input  type="text" name="hnotes" placeholder="Hair goals, concerns, etc">
+                <input  type="text" name="hair_notes" placeholder="Hair goals, concerns, etc">
             </div>
             <div class="form-input pt-30">
                 <input type="submit" name="submit" value="submit">

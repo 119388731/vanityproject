@@ -12,7 +12,7 @@ if (!isset($_SESSION["email"])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Hair Preferences</title>
+    <title> Hair Products</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -51,65 +51,55 @@ if (!isset($_SESSION["email"])) {
 
 <!-- Register -->
 
-<main class="login-body" data-vide-bg="assets/img/login-bg.mp4">
+<main class="login-body">
     <!-- Login Admin -->
     <div class="form">
-    <form class="form-default" action="edithair.php" method="POST"  >
-   
-        
+    <form class="form-default" action="hairproducts.php" method="POST"  >
+          
         <div class="login-form">
             <!-- logo-login -->
             <div class="logo-login">
                 <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
             </div>
-            <h2>Hair</h2>
-            <input type="hidden" id="email" name="email" value="email">
+            <h2>Hair Products</h2>
             <div class="form-input">
-            <label for="hair_type">Select your Hair Type:</label><br>
-            <select name="hair_type" id="hair_type">
-                <option value="hair_straight">straight</option>
-                <option value="hair_wavy">wavy</option>
-                <option value="hair_curly">curly</option>
-                <option value="hair_kinky">kinky</option>
-                <option value="hair_coily">coily</option>
-            </select>
-            <br><br>
+                <label for="customer">Customer email:</label>
+                <input type="text" name="customer">
             </div>
             <div class="form-input">
-            <label for="hair_thickness">Select your Hair Thickness:</label><br>
-            <select name="hair_thickness" id="hair_thickness">
-                <option value="hair_fine">fine</option>
-                <option value="hair_medium">medium</option>
-                <option value="hair_coarse">coarse</option>
-            </select>
-            <br><br>
+                <label for="staff">Service provider:</label>
+                <input type="text" name="staff">
             </div>
             <div class="form-input">
-            <label for="scalp">Select your Scalp conditions:</label><br>
-            <select name="scalp" id="scalp">
-                <option value="dry">dry</option>
-                <option value="normal">normal</option>
-                <option value="oily">oily</option>
-            </select>
-            <br><br>
+                <label for="shampoo">Shampoo:</label>
+                <input type="text" name="shampoo">
             </div>
             <div class="form-input">
-            <label for="hair_length">Select your Hair Length:</label><br>
-            <select name="hair_length" id="hair_length">
-                <option value="hair_vshort">very short</option>
-                <option value="hair_short">short</option>
-                <option value="hair_medium">medium</option>
-                <option value="hair_long">long</option>
-                <option value="hair_vlong">very long</option>
-            </select>
+                <label for="conditioner">Conditioner:</label>
+                <input type="text" name="conditioner">
             </div>
-            <br><br>
             <div class="form-input">
-                <label for="hair_notes">Hair notes</label>
-                <input  type="text" name="hair_notes" placeholder="Hair goals, concerns, etc">
+                <label for="developer">Developer:</label>
+                <input type="text" name="developer">
+            </div>
+            <div class="form-input">
+                <label for="toner">Toner:</label>
+                <input type="text" name="toner">
+            </div>
+            <div class="form-input">
+                <label for="dye">Dye:</label>
+                <input type="text" name="dye">
+            </div>
+            <div class="form-input">
+                <label for="treatment">Treatments:</label>
+                <input type="text" name="treatment">
+            </div>
+            <div class="form-input">
+                <label for="hair_products">Other:</label>
+                <input type="text" name="hair_products">
             </div>
             <div class="form-input pt-30">
-                <input type="submit" name="update" value="update">
+                <input type="submit" name="submit" value="submit">
             </div>
         </div>
         <?php
@@ -117,20 +107,24 @@ if (!isset($_SESSION["email"])) {
         include_once("db-config.php");
 
         // Check if form submitted, insert user data into database - adapted from https://gitlab.com/tutorialsclass/php-simple-login-registration-script
-        if (isset($_POST['update'])) {
-            $email = $_SESSION['email'];
-            $hair_type = $_POST['hair_type'];
-            $hair_thickness = $_POST['hair_thickness'];
-            $scalp = $_POST['scalp'];
-            $hair_length = $_POST['hair_length'];
-            $hair_notes = $_POST['hair_notes'];
+        if (isset($_POST['submit'])) {
+            $customer = $_POST['customer'];
+            $staff = $_POST['staff'];
+            $shampoo = $_POST['shampoo'];
+            $conditioner = $_POST['conditioner'];
+            $developer = $_POST['developer'];
+            $toner = $_POST['toner'];
+            $dye = $_POST['dye'];
+            $treatment = $_POST['treatment'];
+            $hair_products = $_POST['hair_products'];
 
-                // Update data into database adapted from https://www.onlineittuts.com/insert-update-delete-in-php.html
-                $result   = mysqli_query($con, "UPDATE hair_pref SET hair_type='$hair_type', hair_thickness='$hair_thickness' , scalp='$scalp' , hair_length='$hair_length' , hair_notes='$hair_notes' where email = '$email' ");
+                // Insert user data into database
+                $result   = mysqli_query($con, "INSERT INTO hair_products(customer, staff, shampoo, conditioner, developer, toner, dye, treatment, hair_products) 
+                VALUES('$customer', '$staff', '$shampoo', '$conditioner', '$developer', '$toner', '$dye', '$treatment', '$hair_products')");
 
                 // check if user data inserted successfully.
                 if ($result) {
-                    echo "<br/><br/> Hair preferences updated.";
+                    echo "<br/><br/> Hair services added.";
                 } else {
                     echo "Preference addition error. Please try again." . mysqli_error($con);
                 }

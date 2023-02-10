@@ -12,7 +12,7 @@ if (!isset($_SESSION["email"])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Hair Preferences</title>
+    <title> Hair Products</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -50,96 +50,68 @@ if (!isset($_SESSION["email"])) {
 
 
 <!-- Register -->
+<body class="bg-dark">
 
-<main class="login-body" data-vide-bg="assets/img/login-bg.mp4">
-    <!-- Login Admin -->
-    <div class="form">
-    <form class="form-default" action="edithair.php" method="POST"  >
-   
-        
-        <div class="login-form">
-            <!-- logo-login -->
-            <div class="logo-login">
-                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
-            </div>
-            <h2>Hair</h2>
-            <input type="hidden" id="email" name="email" value="email">
-            <div class="form-input">
-            <label for="hair_type">Select your Hair Type:</label><br>
-            <select name="hair_type" id="hair_type">
-                <option value="hair_straight">straight</option>
-                <option value="hair_wavy">wavy</option>
-                <option value="hair_curly">curly</option>
-                <option value="hair_kinky">kinky</option>
-                <option value="hair_coily">coily</option>
-            </select>
-            <br><br>
-            </div>
-            <div class="form-input">
-            <label for="hair_thickness">Select your Hair Thickness:</label><br>
-            <select name="hair_thickness" id="hair_thickness">
-                <option value="hair_fine">fine</option>
-                <option value="hair_medium">medium</option>
-                <option value="hair_coarse">coarse</option>
-            </select>
-            <br><br>
-            </div>
-            <div class="form-input">
-            <label for="scalp">Select your Scalp conditions:</label><br>
-            <select name="scalp" id="scalp">
-                <option value="dry">dry</option>
-                <option value="normal">normal</option>
-                <option value="oily">oily</option>
-            </select>
-            <br><br>
-            </div>
-            <div class="form-input">
-            <label for="hair_length">Select your Hair Length:</label><br>
-            <select name="hair_length" id="hair_length">
-                <option value="hair_vshort">very short</option>
-                <option value="hair_short">short</option>
-                <option value="hair_medium">medium</option>
-                <option value="hair_long">long</option>
-                <option value="hair_vlong">very long</option>
-            </select>
-            </div>
-            <br><br>
-            <div class="form-input">
-                <label for="hair_notes">Hair notes</label>
-                <input  type="text" name="hair_notes" placeholder="Hair goals, concerns, etc">
-            </div>
-            <div class="form-input pt-30">
-                <input type="submit" name="update" value="update">
+<div class="container">
+    <div class="row">
+        <div class="col m-auto">
+            <div class="card mt-5">
+                <table class="table table-bordered">
+                    <!--adapted from https://www.onlineittuts.com/fetch-data-database-in-php.html -->
+                    <tr>
+                        <td> Customer </td>
+                        <td> Staff </td>
+                        <td> Shampoo </td>
+                        <td> Conditioner </td>
+                        <td> Developer </td>
+                        <td> Toner </td>
+                        <td> Dye </td>
+                        <td> Treatments </td>
+                        <td> Other </td>
+                    </tr>
+
+                    <?php 
+
+                        include('db-config.php');
+                    $query = "SELECT * FROM hair_products";
+                    
+                    $result = mysqli_query($con, $query);
+
+                            while($row=mysqli_fetch_assoc($result))
+                            {
+                                $customer = $row['customer'];
+                                $staff = $row['staff'];
+                                $shampoo = $row['shampoo'];
+                                $conditioner = $row['conditioner'];
+                                $developer = $row['developer'];
+                                $toner = $row['toner'];
+                                $dye = $row['dye'];
+                                $treatment = $row['treatment'];
+                                $hair_products = $row['hair_products'];
+                    ?>
+                            <tr>
+                                <td><?php echo $customer ?></td>
+                                <td><?php echo $staff ?></td>
+                                <td><?php echo $shampoo ?></td>
+                                <td><?php echo $conditioner ?></td>
+                                <td><?php echo $developer ?></td>
+                                <td><?php echo $toner ?></td>
+                                <td><?php echo $dye ?></td>
+                                <td><?php echo $treatment ?></td>
+                                <td><?php echo $hair_products ?></td>
+                                <td><a href="edithairproduct.php" class="btn btn-pencil">Edit</a></td>
+                                <td><a href="deletehair.php" class="btn btn-danger">Delete</a></td>
+                            </tr>        
+                    <?php 
+                            }  
+                    ?>                                                                    
+                           
+
+                </table>
             </div>
         </div>
-        <?php
-        //including the database connection file
-        include_once("db-config.php");
-
-        // Check if form submitted, insert user data into database - adapted from https://gitlab.com/tutorialsclass/php-simple-login-registration-script
-        if (isset($_POST['update'])) {
-            $email = $_SESSION['email'];
-            $hair_type = $_POST['hair_type'];
-            $hair_thickness = $_POST['hair_thickness'];
-            $scalp = $_POST['scalp'];
-            $hair_length = $_POST['hair_length'];
-            $hair_notes = $_POST['hair_notes'];
-
-                // Update data into database adapted from https://www.onlineittuts.com/insert-update-delete-in-php.html
-                $result   = mysqli_query($con, "UPDATE hair_pref SET hair_type='$hair_type', hair_thickness='$hair_thickness' , scalp='$scalp' , hair_length='$hair_length' , hair_notes='$hair_notes' where email = '$email' ");
-
-                // check if user data inserted successfully.
-                if ($result) {
-                    echo "<br/><br/> Hair preferences updated.";
-                } else {
-                    echo "Preference addition error. Please try again." . mysqli_error($con);
-                }
-            }
-        
-
-        ?>
-    </form>
     </div>
+</div>
     <!-- /end login form -->
 </main>
 
