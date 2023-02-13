@@ -1,9 +1,18 @@
+<?php
+session_start();
+
+// This page can be accessed only after login
+// Redirect user to login page, if user email is not available in session
+if (!isset($_SESSION["email"])) {
+    header("location: login.php");
+}
+?>
 <!doctype html>
 <html class="no-js" lang="zxx">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Register</title>
+    <title> Nail Art Preferences</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -45,89 +54,80 @@
 <main class="login-body" data-vide-bg="assets/img/login-bg.mp4">
     <!-- Login Admin -->
     <div class="form">
-    <form class="form-default" action="register.php" method="POST"  >
-   
-        
+    <form class="form-default" action="editnailart.php" method="POST"  >
         <div class="login-form">
             <!-- logo-login -->
             <div class="logo-login">
                 <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
             </div>
-            <h2>Registration Here</h2>
-
+            <h2>Nail Art</h2>
+            <input type="hidden" id="email" name="email" value="email">
             <div class="form-input">
-                <label for="name">Full name</label>
-                <input  type="text" name="name" placeholder="Full name">
+            <label for="nail_service">Select your usual Nail service:</label><br>
+            <select name="nail_service" id="nail_service">
+                <option value="manicure">manicure</option>
+                <option value="shellac">shellac</option>
+                <option value="gel">gel</option>
+                <option value="acrylics">acrylics</option>
+                <option value="presson">press ons</option>
+            </select>
+            <br><br>
             </div>
             <div class="form-input">
-                <label for="name">Email Address</label>
-                <input type="email" name="email" placeholder="Email Address">
+            <label for="nail_shape">Select your preferred nail shape:</label><br>
+            <select name="nail_shape" id="nail_shape">
+                <option value="oval">oval</option>
+                <option value="almond">almond</option>
+                <option value="square">square</option>
+                <option value="squoval">squoval</option>
+                <option value="coffin">coffin</option>
+                <option value="stiletto">stiletto</option>
+                <option value="round">round</option>
+            </select>
+            <br><br>
             </div>
             <div class="form-input">
-                <label for="name">Password</label>
-                <input type="password" name="password" placeholder="Password">
+            <label for="nail_style">Select your preferred nail style:</label><br>
+            <select name="nail_style" id="nail_style">
+                <option value="simple">simple</option>
+                <option value="frenchtip">french tip</option>
+                <option value="someart">some art</option>
+                <option value="embellished">embellished</option>
+            </select>
+            <br><br>
             </div>
+            <br><br>
             <div class="form-input">
-                <label for="name">Confirm Password</label>
-                <input type="password" name="password" placeholder="Confirm Password">
-            </div>
-            <div class="form-input">
-                <label for="name">Address</label>
-                <input  type="text" name="address" placeholder="Address">
-            </div>
-            <div class="form-input">
-                <label for="name">Phone</label>
-                <input  type="tel" name="phone" placeholder="Phone">
-            </div>
-            <div class="form-input">
-                <label for="name">User Type</label><br>
-                <label for="customer">Customer</label><Br><input type="radio" name="utype" value="Customer"><hr>
-                <label for="staff">Staff</label><br><input type="radio" name="utype" value="Staff"><hr>
-                <label for="manager">Manager</label><br><input type="radio" name="utype" value="Manager">
+                <label for="nailart_notes">Nail art notes</label>
+                <input  type="text" name="nailart_notes" placeholder="Favourite colour, nail inspiration etc">
             </div>
             <div class="form-input pt-30">
-                <input type="submit" name="register" value="Register">
+                <input type="submit" name="update" value="update">
             </div>
-            <a href="login.php" class="login">login</a>
         </div>
         <?php
         //including the database connection file
         include_once("db-config.php");
-        //adapted from https://gitlab.com/tutorialsclass/php-simple-login-registration-script
+
         // Check If form submitted, insert user data into database.
-        if (isset($_POST['register'])) {
-            $name     = $_POST['name'];
-            $email    = $_POST['email'];
-            //hash password for security https://www.webslesson.info/2016/10/php-login-registration-form-with-md5-password-encryption.html 
-            $password = $_POST['password'];
-            $password = md5($password); 
-            $address = $_POST['address'];
-            $phone = $_POST['phone'];
-            $utype = $_POST['utype'];
+        if (isset($_POST['update'])) {
+            $email = $_SESSION['email'];
+            $nail_service = $_POST['nail_service'];
+            $nail_shape = $_POST['nail_shape'];
+            $nail_style = $_POST['nail_style'];
+            $nailart_notes = $_POST['nailart_notes'];
 
-            // If email already exists, throw error
-            $email_result = mysqli_query($con, "select 'email' from users where email='$email' and password='$password'");
-
-            // Count the number of row matched 
-            $user_matched = mysqli_num_rows($email_result);
-
-            // If number of user rows returned more than 0, it means email already exists
-            if ($user_matched > 0) {
-                echo "<br/><br/><strong>Error: </strong> User already exists with the email id '$email'.";
-            } else {
-                //hash password for security https://www.webslesson.info/2016/10/php-login-registration-form-with-md5-password-encryption.html 
                 // Insert user data into database
-                $result   = mysqli_query($con, "INSERT INTO users(name,email,password, address, phone, utype) VALUES('$name','$email','$password', '$address', '$phone', '$utype')");
+                $result   = mysqli_query($con, "UPDATE nailart_pref SET nail_service='$nail_service', nail_shape='$nail_shape', nail_style='$nail_style', nail_notes='$nailart_notes' WHERE email='$email'");
 
                 // check if user data inserted successfully.
                 if ($result) {
-                    $_SESSION["email"] = $email;
-                    header("location: options.php");
+                    echo "<br/><br/> Nail art preferences updated.";
                 } else {
-                    echo "Registration error. Please try again." . mysqli_error($con);
+                    echo "Preference addition error. Please try again." . mysqli_error($con);
                 }
             }
-        }
+        
 
         ?>
     </form>

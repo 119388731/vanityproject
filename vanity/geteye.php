@@ -12,7 +12,7 @@ if (!isset($_SESSION["email"])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Hair Preferences</title>
+    <title> Eye Preferences</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -50,96 +50,70 @@ if (!isset($_SESSION["email"])) {
 
 
 <!-- Register -->
+<body class="bg-dark">
 
-<main class="login-body" data-vide-bg="assets/img/login-bg.mp4">
-    <!-- Login Admin -->
-    <div class="form">
-    <form class="form-default" action="hair.php" method="POST"  >
-   
-        
-        <div class="login-form">
-            <!-- logo-login -->
-            <div class="logo-login">
-                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
-            </div>
-            <h2>Hair</h2>
-            <input type="hidden" id="email" name="email" value="email">
-            <div class="form-input">
-            <label for="hair_type">Select your Hair Type:</label><br>
-            <select name="hair_type" id="hair_type">
-                <option value="hair_straight">straight</option>
-                <option value="hair_wavy">wavy</option>
-                <option value="hair_curly">curly</option>
-                <option value="hair_kinky">kinky</option>
-                <option value="hair_coily">coily</option>
-            </select>
-            <br><br>
-            </div>
-            <div class="form-input">
-            <label for="hair_thickness">Select your Hair Thickness:</label><br>
-            <select name="hair_thickness" id="hair_thickness">
-                <option value="hair_fine">fine</option>
-                <option value="hair_medium">medium</option>
-                <option value="hair_coarse">coarse</option>
-            </select>
-            <br><br>
-            </div>
-            <div class="form-input">
-            <label for="scalp">Select your Scalp conditions:</label><br>
-            <select name="scalp" id="scalp">
-                <option value="dry">dry</option>
-                <option value="normal">normal</option>
-                <option value="oily">oily</option>
-            </select>
-            <br><br>
-            </div>
-            <div class="form-input">
-            <label for="hair_length">Select your Hair Length:</label><br>
-            <select name="hair_length" id="hair_length">
-                <option value="hair_vshort">very short</option>
-                <option value="hair_short">short</option>
-                <option value="hair_medium">medium</option>
-                <option value="hair_long">long</option>
-                <option value="hair_vlong">very long</option>
-            </select>
-            </div>
-            <br><br>
-            <div class="form-input">
-                <label for="hair_notes">Hair notes</label>
-                <input  type="text" name="hair_notes" placeholder="Hair goals, concerns, etc">
-            </div>
-            <div class="form-input pt-30">
-                <input type="submit" name="submit" value="submit">
+<div class="container">
+    <div class="row">
+        <div class="col m-auto">
+            <div class="card mt-5">
+                <table class="table table-bordered">
+                    <!--adapted from https://www.onlineittuts.com/fetch-data-database-in-php.html -->
+                    <tr>
+                        <td> Email </td>
+                        <td> Eye Shape </td>
+                        <td> Eye Colour </td>
+                        <td> Shadow Colourway </td>
+                        <td> Eyeliner Type </td>
+                        <td> Eyelash Type </td>
+                        <td> Eyeshadow Brand/Shades </td>
+                        <td> Eyeliner Brand/Shades </td>
+                        <td> Eyelash Brand/Style </td>
+                        <td> Notes </td>
+                    </tr>
+
+                    <?php 
+
+                        include('db-config.php');
+                        $query = "SELECT * FROM eye_pref";
+
+                    $result = mysqli_query($con, $query);
+
+                            while($row=mysqli_fetch_assoc($result))
+                            {
+                                $email = $row['email'];
+                                $eye_shape = $row['eye_shape'];
+                                $eye_colour = $row['eye_colour'];
+                                $colourway = $row['colourway'];
+                                $liner_type = $row['liner_type'];
+                                $lash_type = $row['lash_type'];
+                                $eyeshadow_brand = $row['eyeshadow_bramd'];
+                                $eyeliner_brand = $row['eyeliner_brand'];
+                                $lash_brand = $row['lash_brand'];
+                                $eye_notes = $row['eye_notes'];
+                    ?>
+                            <tr>
+                                <td><?php echo $email ?></td>
+                                <td><?php echo $eye_shape ?></td>
+                                <td><?php echo $eye_colour ?></td>
+                                <td><?php echo $colourway ?></td>
+                                <td><?php echo $liner_type ?></td>
+                                <td><?php echo $lash_type ?></td>
+                                <td><?php echo $eyeshadow_brand ?></td>
+                                <td><?php echo $eyeliner_brand ?></td>
+                                <td><?php echo $lash_brand ?></td>
+                                <td><?php echo $eye_notes ?></td>
+                                <td><a href="editeyes.php" class="btn btn-pencil">Edit</a></td>
+                            </tr>        
+                    <?php 
+                            }  
+                    ?>                                                                    
+                           
+
+                </table>
             </div>
         </div>
-        <?php
-        //including the database connection file
-        include_once("db-config.php");
-
-        // Check if form submitted, insert user data into database - adapted from https://gitlab.com/tutorialsclass/php-simple-login-registration-script
-        if (isset($_POST['submit'])) {
-            $email = $_SESSION['email'];
-            $hair_type = $_POST['hair_type'];
-            $hair_thickness = $_POST['hair_thickness'];
-            $scalp = $_POST['scalp'];
-            $hair_length = $_POST['hair_length'];
-            $hair_notes = $_POST['hair_notes'];
-
-                // Insert user data into database
-                $result   = mysqli_query($con, "INSERT INTO hair_pref(email, hair_type, hair_thickness, scalp, hair_length, hair_notes) VALUES('$email','$hair_type','$hair_thickness','$scalp', '$hair_length', '$hair_notes')");
-
-                // check if user data inserted successfully.
-                if ($result) {
-                    echo "<br/><br/> Hair preferences added.";
-                } else {
-                    echo "Preference addition error. Please try again." . mysqli_error($con);
-                }
-            }
-        
-
-        ?>
-    </form>
     </div>
+</div>
     <!-- /end login form -->
 </main>
 

@@ -1,9 +1,18 @@
+<?php
+session_start();
+
+// This page can be accessed only after login
+// Redirect user to login page, if user email is not available in session
+if (!isset($_SESSION["email"])) {
+    header("location: login.php");
+}
+?>
 <!doctype html>
 <html class="no-js" lang="zxx">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Register</title>
+    <title> Nail Service</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -42,92 +51,109 @@
 
 <!-- Register -->
 
-<main class="login-body" data-vide-bg="assets/img/login-bg.mp4">
+<main class="login-body">
     <!-- Login Admin -->
     <div class="form">
-    <form class="form-default" action="register.php" method="POST"  >
-   
-        
+    <form class="form-default" action="nailservice.php" method="POST"  >
+          
         <div class="login-form">
             <!-- logo-login -->
             <div class="logo-login">
                 <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
             </div>
-            <h2>Registration Here</h2>
-
+            <h2>Nail Services</h2>
+            <!-- taken from dublinnails.com -->
             <div class="form-input">
-                <label for="name">Full name</label>
-                <input  type="text" name="name" placeholder="Full name">
+                <label for="customer">Customer email:</label>
+                <input type="text" name="customer">
             </div>
             <div class="form-input">
-                <label for="name">Email Address</label>
-                <input type="email" name="email" placeholder="Email Address">
+                <label for="staff">Service provider:</label>
+                <input type="text" name="staff">
             </div>
             <div class="form-input">
-                <label for="name">Password</label>
-                <input type="password" name="password" placeholder="Password">
+            <label> Manicure:</label><br>
+            </div> 
+            <div>
+            <input type="checkbox" name="manicure" value="mini_mani" />Mini Manicure<br />
+            <input type="checkbox" name="manicure" value="classic_mani" />Classic Manicure<br />
+            <input type="checkbox" name="manicure" value="signature_mani" />Signature Manicure<br />
+            <input type="checkbox" name="manicure" value="signature_gel_mani" />Signature Manicure + Gel Polish<br />
             </div>
             <div class="form-input">
-                <label for="name">Confirm Password</label>
-                <input type="password" name="password" placeholder="Confirm Password">
+            <label>Pedicure:</label><br>
+            </div>
+            <div>
+            <input type="checkbox" name="pedicure" value="mini_pedi" />Mini Pedicure<br />
+            <input type="checkbox" name="pedicure" value="signature_pedi" /> Signature Pedicure<br />
+            <input type="checkbox" name="pedicure" value="signature_gel_polish" />Signature Pedicure + Gel Polish<br />
             </div>
             <div class="form-input">
-                <label for="name">Address</label>
-                <input  type="text" name="address" placeholder="Address">
+            <label>Gel Polish:</label><br>
+            </div>
+            <div>
+            <input type="checkbox" name="gel" value="gel_mani" /> Gel Manicure<br />
+            <input type="checkbox" name="gel" value="gel_pedi" />Gel Pedicure<br />
+            <input type="checkbox" name="gel" value="bespoke_pedi" />Bespoike Nail Polish<br />
+            <input type="checkbox" name="gel" value="gel_design_mani" />Gel Manicure + design<br />
+            <input type="checkbox" name="gel" value="gel_design_pedi" />Gel Pedicure + design<br />
             </div>
             <div class="form-input">
-                <label for="name">Phone</label>
-                <input  type="tel" name="phone" placeholder="Phone">
+            <label>Extensions:</label><br>
+            </div>
+            <div>
+            <input type="checkbox" name="extension" value="extension_colour" />Colour<br />
+            <input type="checkbox" name="extension" value="extension_french" />French/Ombre <br />
+            <input type="checkbox" name="extension" value="extension_simple" />Simple design<br />
+            <input type="checkbox" name="extension" value="extension_design" />All design<br />
+            <input type="checkbox" name="extension" value="extension_complicated" />Complicated design<br />
             </div>
             <div class="form-input">
-                <label for="name">User Type</label><br>
-                <label for="customer">Customer</label><Br><input type="radio" name="utype" value="Customer"><hr>
-                <label for="staff">Staff</label><br><input type="radio" name="utype" value="Staff"><hr>
-                <label for="manager">Manager</label><br><input type="radio" name="utype" value="Manager">
+            <label>Refill/Removal :</label><br>
+            </div>
+            <div>
+            <input type="checkbox" name="refill" value="remove_gel_mani" /> Gel manicure removal<br />
+            <input type="checkbox" name="refill" value="refill_gel_mani"/>Gel manicure refill <br />
+            <input type="checkbox" name="refill" value="remove_gel_pedi" />Gel pedicure removal<br />
+            <input type="checkbox" name="refill" value="refill_gel_pedi" />Gel pedicure refill<br />
+            <input type="checkbox" name="refill" value="refill_extension" />Extension refill<br />
+            <input type="checkbox" name="refill" value="removal_extension" />Extension removal<br />
+            <input type="checkbox" name="refill" value="repair_exntension" />Extension repair <br />
+            </div>
+            <div class="form-input">
+                <label for="nailservice_other">Other:</label>
+                <input type="text" name="hairservice_other" placeholder="Treatments etc">
             </div>
             <div class="form-input pt-30">
-                <input type="submit" name="register" value="Register">
+                <input type="submit" name="submit" value="submit">
             </div>
-            <a href="login.php" class="login">login</a>
         </div>
         <?php
         //including the database connection file
         include_once("db-config.php");
-        //adapted from https://gitlab.com/tutorialsclass/php-simple-login-registration-script
-        // Check If form submitted, insert user data into database.
-        if (isset($_POST['register'])) {
-            $name     = $_POST['name'];
-            $email    = $_POST['email'];
-            //hash password for security https://www.webslesson.info/2016/10/php-login-registration-form-with-md5-password-encryption.html 
-            $password = $_POST['password'];
-            $password = md5($password); 
-            $address = $_POST['address'];
-            $phone = $_POST['phone'];
-            $utype = $_POST['utype'];
 
-            // If email already exists, throw error
-            $email_result = mysqli_query($con, "select 'email' from users where email='$email' and password='$password'");
+        // Check if form submitted, insert user data into database - adapted from https://gitlab.com/tutorialsclass/php-simple-login-registration-script
+        if (isset($_POST['submit'])) {
+            $customer = $_POST['customer'];
+            $staff = $_POST['staff'];
+            $manicure = $_POST['manicure'];
+            $pedicure = $_POST['pedicure'];
+            $gel = $_POST['gel'];
+            $extension = $_POST['extension'];
+            $refill = $_POST['refill'];
+            $nailservice_other = $_POST['nailservice_other'];
 
-            // Count the number of row matched 
-            $user_matched = mysqli_num_rows($email_result);
-
-            // If number of user rows returned more than 0, it means email already exists
-            if ($user_matched > 0) {
-                echo "<br/><br/><strong>Error: </strong> User already exists with the email id '$email'.";
-            } else {
-                //hash password for security https://www.webslesson.info/2016/10/php-login-registration-form-with-md5-password-encryption.html 
                 // Insert user data into database
-                $result   = mysqli_query($con, "INSERT INTO users(name,email,password, address, phone, utype) VALUES('$name','$email','$password', '$address', '$phone', '$utype')");
+                $result   = mysqli_query($con, "INSERT INTO nail_service(customer, staff, manicure, pedicure, gel, extension, refill, nailservice_other) VALUES('$customer', '$staff', '$manicure', '$pedicure', '$gel', '$extension'. '$refill', '$nailservice_other')");
 
                 // check if user data inserted successfully.
                 if ($result) {
-                    $_SESSION["email"] = $email;
-                    header("location: options.php");
+                    echo "<br/><br/> Nail services added.";
                 } else {
-                    echo "Registration error. Please try again." . mysqli_error($con);
+                    echo "Preference addition error. Please try again." . mysqli_error($con);
                 }
             }
-        }
+        
 
         ?>
     </form>

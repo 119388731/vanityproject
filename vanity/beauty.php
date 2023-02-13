@@ -1,9 +1,18 @@
+<?php
+session_start();
+
+// This page can be accessed only after login
+// Redirect user to login page, if user email is not available in session
+if (!isset($_SESSION["email"])) {
+    header("location: login.php");
+}
+?>
 <!doctype html>
 <html class="no-js" lang="zxx">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Register</title>
+    <title> Beauty Preferences</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -45,89 +54,92 @@
 <main class="login-body" data-vide-bg="assets/img/login-bg.mp4">
     <!-- Login Admin -->
     <div class="form">
-    <form class="form-default" action="register.php" method="POST"  >
-   
-        
+    <form class="form-default" action="beauty.php" method="POST"  >
         <div class="login-form">
             <!-- logo-login -->
             <div class="logo-login">
                 <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
             </div>
-            <h2>Registration Here</h2>
-
+            <h2>Beauty</h2>
+            <input type="hidden" id="email" name="email" value="email">
             <div class="form-input">
-                <label for="name">Full name</label>
-                <input  type="text" name="name" placeholder="Full name">
+            <label for="skin_type">Select your skin type:</label><br>
+            <select name="skin_type" id="skin_type">
+                <option value="skin_dry">dry</option>
+                <option value="skin_normal">normal</option>
+                <option value="skin_oily">oily</option>
+                <option value="skin_combination">combination</option>
+                <option value="skin_sensitive">sensitive</option>
+            </select>
+            </select>
+            <br><br>
             </div>
             <div class="form-input">
-                <label for="name">Email Address</label>
-                <input type="email" name="email" placeholder="Email Address">
+            <label for="undertone">Select your undertone:</label><br>
+            <select name="undertone" id="undertone">
+                <option value="warm">warm</option>
+                <option value="cold">cold</option>
+                <option value="neutral">neutral</option>
+            </select>
+            <br><br>
             </div>
             <div class="form-input">
-                <label for="name">Password</label>
-                <input type="password" name="password" placeholder="Password">
+            <label for="skintone">Select your skin tone:</label><br>
+            <select name="skintone" id="skintone">
+                <option value="porcelain">porcelain</option>
+                <option value="light">light</option>
+                <option value="medium">medium</option>
+                <option value="mediumtan">medium tan</option>
+                <option value="sienna">sienna</option>
+                <option value="amber">amber</option>
+                <option value="tan">tan</option>
+                <option value="deep">deep</option>
+                <option value="mocha">mocha</option>
+                <option value="espresso">espresso</option>
+            </select>
+            <br><br>
             </div>
             <div class="form-input">
-                <label for="name">Confirm Password</label>
-                <input type="password" name="password" placeholder="Confirm Password">
+            <label for="makeup_type">Usual makeup style:</label><br>
+            <select name="makeup_type" id="makeup_type">
+                <option value="simple">simple</option>
+                <option value="dramatic">dramatic</option>
+                <option value="other">other</option>
+            </select>
             </div>
+            <br><br>
             <div class="form-input">
-                <label for="name">Address</label>
-                <input  type="text" name="address" placeholder="Address">
-            </div>
-            <div class="form-input">
-                <label for="name">Phone</label>
-                <input  type="tel" name="phone" placeholder="Phone">
-            </div>
-            <div class="form-input">
-                <label for="name">User Type</label><br>
-                <label for="customer">Customer</label><Br><input type="radio" name="utype" value="Customer"><hr>
-                <label for="staff">Staff</label><br><input type="radio" name="utype" value="Staff"><hr>
-                <label for="manager">Manager</label><br><input type="radio" name="utype" value="Manager">
+                <label for="beauty_notes">Beauty notes</label>
+                <input type="text" name="beauty_notes" placeholder="Allergies, skincare routine etc">
             </div>
             <div class="form-input pt-30">
-                <input type="submit" name="register" value="Register">
+                <input type="submit" name="submit" value="Submit">
             </div>
-            <a href="login.php" class="login">login</a>
         </div>
         <?php
         //including the database connection file
         include_once("db-config.php");
-        //adapted from https://gitlab.com/tutorialsclass/php-simple-login-registration-script
+
         // Check If form submitted, insert user data into database.
-        if (isset($_POST['register'])) {
-            $name     = $_POST['name'];
-            $email    = $_POST['email'];
-            //hash password for security https://www.webslesson.info/2016/10/php-login-registration-form-with-md5-password-encryption.html 
-            $password = $_POST['password'];
-            $password = md5($password); 
-            $address = $_POST['address'];
-            $phone = $_POST['phone'];
-            $utype = $_POST['utype'];
+        if (isset($_POST['submit'])) {
+            $email = $_SESSION['email'];
+            $skin_type = $_POST['skin_type'];
+            $undertone = $_POST['undertone'];
+            $skintone = $_POST['skintone'];
+            $makeup_type = $_POST['makeup_type'];
+            $beauty_notes = $_POST['beauty_notes'];
 
-            // If email already exists, throw error
-            $email_result = mysqli_query($con, "select 'email' from users where email='$email' and password='$password'");
-
-            // Count the number of row matched 
-            $user_matched = mysqli_num_rows($email_result);
-
-            // If number of user rows returned more than 0, it means email already exists
-            if ($user_matched > 0) {
-                echo "<br/><br/><strong>Error: </strong> User already exists with the email id '$email'.";
-            } else {
-                //hash password for security https://www.webslesson.info/2016/10/php-login-registration-form-with-md5-password-encryption.html 
                 // Insert user data into database
-                $result   = mysqli_query($con, "INSERT INTO users(name,email,password, address, phone, utype) VALUES('$name','$email','$password', '$address', '$phone', '$utype')");
+                $result   = mysqli_query($con, "INSERT INTO beauty_pref(email, skin_type, undertone, skintone, makeup_type, beauty_notes) VALUES('$email','$skin_type','$undertone','$skintone', '$makeup_type', '$beauty_notes')");
 
                 // check if user data inserted successfully.
                 if ($result) {
-                    $_SESSION["email"] = $email;
-                    header("location: options.php");
+                    echo "<br/><br/> Beauty preferences added.";
                 } else {
-                    echo "Registration error. Please try again." . mysqli_error($con);
+                    echo "Preference addition error. Please try again." . mysqli_error($con);
                 }
             }
-        }
+        
 
         ?>
     </form>

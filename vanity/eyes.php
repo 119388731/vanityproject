@@ -12,7 +12,7 @@ if (!isset($_SESSION["email"])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Hair Preferences</title>
+    <title> Nail Preferences</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -54,7 +54,7 @@ if (!isset($_SESSION["email"])) {
 <main class="login-body" data-vide-bg="assets/img/login-bg.mp4">
     <!-- Login Admin -->
     <div class="form">
-    <form class="form-default" action="hair.php" method="POST"  >
+    <form class="form-default" action="eyes.php" method="POST"  >
    
         
         <div class="login-form">
@@ -62,81 +62,115 @@ if (!isset($_SESSION["email"])) {
             <div class="logo-login">
                 <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
             </div>
-            <h2>Hair</h2>
+            <h2>Eyes</h2>
             <input type="hidden" id="email" name="email" value="email">
             <div class="form-input">
-            <label for="hair_type">Select your Hair Type:</label><br>
-            <select name="hair_type" id="hair_type">
-                <option value="hair_straight">straight</option>
-                <option value="hair_wavy">wavy</option>
-                <option value="hair_curly">curly</option>
-                <option value="hair_kinky">kinky</option>
-                <option value="hair_coily">coily</option>
+            <label for="eye_shape">Select your eye shape:</label><br>
+            <select name="eye_shape" id="eye_shape">
+                <option value="almond">almond</option>
+                <option value="round">round </option>
+                <option value="downturned">downturned</option>
+                <option value="upturned">upturned</option>
+                <option value="hooded">hooded</option>
+                <option value="monolid">monolid</option>
             </select>
             <br><br>
             </div>
             <div class="form-input">
-            <label for="hair_thickness">Select your Hair Thickness:</label><br>
-            <select name="hair_thickness" id="hair_thickness">
-                <option value="hair_fine">fine</option>
-                <option value="hair_medium">medium</option>
-                <option value="hair_coarse">coarse</option>
+            <label for="eye_colour">Select your eye colour:</label><br>
+            <select name="eye_colour" id="eye_colour">
+                <option value="amber">amber</option>
+                <option value="blue">blue</option>
+                <option value="brown">brown</option>
+                <option value="grey">grey</option>
+                <option value="green">green</option>
+                <option value="hazel">hazel</option>
             </select>
             <br><br>
             </div>
             <div class="form-input">
-            <label for="scalp">Select your Scalp conditions:</label><br>
-            <select name="scalp" id="scalp">
-                <option value="dry">dry</option>
-                <option value="normal">normal</option>
-                <option value="oily">oily</option>
+            <label for="colourway">Select your preferred eyeshadow colourway:</label><br>
+            <select name="colourway" id="colourway">
+                <option value="neon">neon</option>
+                <option value="warm">warm</option>
+                <option value="cool">cool</option>
+                <option value="nude">nude</option>
+                <option value="pastel">pastel</option>
+                <label for="colournotes">Other:</label>
+                <input type="text" name="colourway" placeholder="Other">
             </select>
             <br><br>
             </div>
             <div class="form-input">
-            <label for="hair_length">Select your Hair Length:</label><br>
-            <select name="hair_length" id="hair_length">
-                <option value="hair_vshort">very short</option>
-                <option value="hair_short">short</option>
-                <option value="hair_medium">medium</option>
-                <option value="hair_long">long</option>
-                <option value="hair_vlong">very long</option>
+            <label for="liner_type">Select your Eyeliner Type:</label><br>
+            <select name="liner_type" id="liner_type">
+                <option value="pencil">pencil</option>
+                <option value="liquid">liquid</option>
+                <option value="marker">marker</option>
+                <option value="gel">gel</option>
+                <option value="shadow">shadow</option>
+                <input type="text" name="colournotes" placeholder="Other">
             </select>
             </div>
             <br><br>
             <div class="form-input">
-                <label for="hair_notes">Hair notes</label>
-                <input  type="text" name="hair_notes" placeholder="Hair goals, concerns, etc">
+            <label for="lash_type">Select your lash Type:</label><br>
+            <select name="lash_type" id="lash_type">
+                <option value="classic">classic</option>
+                <option value="volume">volume</option>
+                <option value="hybrid">hybrid</option>
+                <option value="dramatic">dramatic</option>
+                <input type="text" name="colournotes" placeholder="Other">
+            </select>
+            </div>
+            <br><br>
+            <div class="form-input">
+                <label for="eyeshadow_brand">Please list your favourite eyeshadow brands and palettes:</label>
+                <input type="text" name="eyeshadow_brand" placeholder="EG: BeautyBay: Bright 42 Colour Palette">
+            </div>
+            <div class="form-input">
+                <label for="eyeliner_brand">Please list your favourite eyeliner brands and shades:</label>
+                <input type="text" name="eyeliner_brand" placeholder="EG: NYX Epic Wear Long Lasting Liner Stick - Pitch Black">
+            </div>
+            <div class="form-input">
+                <label for="lash_brand">Please list your lash brands and shades:</label>
+                <input type="text" name="lash_brand" placeholder="EG: BPerfect Power Universal Lash">
+            </div>
+            <div class="form-input">
+                <label for="eye_notes">Eye notes</label>
+                <input  type="text" name="eye_notes" placeholder="Sensivity, allergies etc">
             </div>
             <div class="form-input pt-30">
-                <input type="submit" name="submit" value="submit">
+                <input type="submit" name="submit" value="Submit">
             </div>
         </div>
         <?php
         //including the database connection file
         include_once("db-config.php");
 
-        // Check if form submitted, insert user data into database - adapted from https://gitlab.com/tutorialsclass/php-simple-login-registration-script
+        // Check If form submitted, insert user data into database.
         if (isset($_POST['submit'])) {
             $email = $_SESSION['email'];
-            $hair_type = $_POST['hair_type'];
-            $hair_thickness = $_POST['hair_thickness'];
-            $scalp = $_POST['scalp'];
-            $hair_length = $_POST['hair_length'];
-            $hair_notes = $_POST['hair_notes'];
+            $eye_shape = $_POST['eye_shape'];
+            $eye_colour = $_POST['eye_colour'];
+            $colourway = $_POST['colourway'];
+            $liner_type = $_POST['liner_type'];
+            $lash_type = $_POST['lashtlash_typeype'];
+            $eyeshadow_brand = $_POST['eyeshadow_brand'];
+            $eyeliner_brand = $_POST['eyeliner_brand'];
+            $lash_brand = $_POST['lash_brand'];
+            $eye_notes = $_POST['eye_notes'];
 
                 // Insert user data into database
-                $result   = mysqli_query($con, "INSERT INTO hair_pref(email, hair_type, hair_thickness, scalp, hair_length, hair_notes) VALUES('$email','$hair_type','$hair_thickness','$scalp', '$hair_length', '$hair_notes')");
+                $result   = mysqli_query($con, "INSERT INTO eye_pref(email, eye_shape, eye_colour, colourway, liner_type, lash_type, eyeshadow_brand, eyeliner_brand, lash_brand, eye_notes) VALUES('$email','$eye_shape','$eye_colour','$colourway', '$liner_type', '$lash_type', '$eyeshadow_brand','$eyeliner_brand','$lash_brand', '$eye_notes')");
 
                 // check if user data inserted successfully.
                 if ($result) {
-                    echo "<br/><br/> Hair preferences added.";
+                    echo "<br/><br/> Eye preferences added.";
                 } else {
                     echo "Preference addition error. Please try again." . mysqli_error($con);
                 }
             }
-        
-
         ?>
     </form>
     </div>

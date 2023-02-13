@@ -1,9 +1,18 @@
+<?php
+session_start();
+
+// This page can be accessed only after login
+// Redirect user to login page, if user email is not available in session
+if (!isset($_SESSION["email"])) {
+    header("location: login.php");
+}
+?>
 <!doctype html>
 <html class="no-js" lang="zxx">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Register</title>
+    <title> Hair Service</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -42,92 +51,86 @@
 
 <!-- Register -->
 
-<main class="login-body" data-vide-bg="assets/img/login-bg.mp4">
+<main class="login-body">
     <!-- Login Admin -->
     <div class="form">
-    <form class="form-default" action="register.php" method="POST"  >
-   
-        
+    <form class="form-default" action="hairservice.php" method="POST"  >
+          
         <div class="login-form">
             <!-- logo-login -->
             <div class="logo-login">
                 <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
             </div>
-            <h2>Registration Here</h2>
-
+            <h2>Hair Services</h2>
             <div class="form-input">
-                <label for="name">Full name</label>
-                <input  type="text" name="name" placeholder="Full name">
+                <label for="customer">Customer email:</label>
+                <input type="text" name="customer">
             </div>
             <div class="form-input">
-                <label for="name">Email Address</label>
-                <input type="email" name="email" placeholder="Email Address">
+                <label for="staff">Service provider:</label>
+                <input type="text" name="staff">
             </div>
             <div class="form-input">
-                <label for="name">Password</label>
-                <input type="password" name="password" placeholder="Password">
+                <!-- hair options from: https://unisalon1.gettimely.com/Booking/Location/60422?mobile=True -->
+            <label>Cut and Blowdry:</label><br>
+            </div>
+            <div>
+            <input type="checkbox" name="cut_dry" value="cutblow" />Cut and Blowdry<br />
+            <input type="checkbox" name="cut_dry" value="blowdry" />Short - Med blowdry<br />
+            <input type="checkbox" name="cut_dry" value="blowdrylong" />Long Blowdry<br />
+            <input type="checkbox" name="cut_dry" value="blowdrycurly" />Curly Blowdry<br />
             </div>
             <div class="form-input">
-                <label for="name">Confirm Password</label>
-                <input type="password" name="password" placeholder="Confirm Password">
+            <label>Colour:</label><br>
+            </div>
+            <div>
+            <input type="checkbox" name="colour" value="fullcolour" />Full colour<br />
+            <input type="checkbox" name="colour" value="root" />Root touch up<br />
+            <input type="checkbox" name="colour" value="fullmeche" />Full meche<br />
+            <input type="checkbox" name="colour" value="halfmeche" />Half meche<br />
+            <input type="checkbox" name="colour" value="balayage" />Balayage<br />
             </div>
             <div class="form-input">
-                <label for="name">Address</label>
-                <input  type="text" name="address" placeholder="Address">
+            <label>Gents:</label><br>
+            </div>
+            <div>
+            <input type="checkbox" name="gents" value="blowdrygents" />Gents<br />
+            <input type="checkbox" name="gents" value="dye" />Colour<br />
+            <input type="checkbox" name="gents" value="fade" />Fade<br />
+            <input type="checkbox" name="gents" value="haircut" />Cut<br />
             </div>
             <div class="form-input">
-                <label for="name">Phone</label>
-                <input  type="tel" name="phone" placeholder="Phone">
-            </div>
-            <div class="form-input">
-                <label for="name">User Type</label><br>
-                <label for="customer">Customer</label><Br><input type="radio" name="utype" value="Customer"><hr>
-                <label for="staff">Staff</label><br><input type="radio" name="utype" value="Staff"><hr>
-                <label for="manager">Manager</label><br><input type="radio" name="utype" value="Manager">
+                <label for="hairservice_other">Other:</label>
+                <input type="text" name="hairservice_other" placeholder="Treatments etc">
             </div>
             <div class="form-input pt-30">
-                <input type="submit" name="register" value="Register">
+                <input type="submit" name="submit" value="submit">
             </div>
-            <a href="login.php" class="login">login</a>
         </div>
         <?php
         //including the database connection file
         include_once("db-config.php");
-        //adapted from https://gitlab.com/tutorialsclass/php-simple-login-registration-script
-        // Check If form submitted, insert user data into database.
-        if (isset($_POST['register'])) {
-            $name     = $_POST['name'];
-            $email    = $_POST['email'];
-            //hash password for security https://www.webslesson.info/2016/10/php-login-registration-form-with-md5-password-encryption.html 
-            $password = $_POST['password'];
-            $password = md5($password); 
-            $address = $_POST['address'];
-            $phone = $_POST['phone'];
-            $utype = $_POST['utype'];
 
-            // If email already exists, throw error
-            $email_result = mysqli_query($con, "select 'email' from users where email='$email' and password='$password'");
+        // Check if form submitted, insert user data into database - adapted from https://gitlab.com/tutorialsclass/php-simple-login-registration-script
+        if (isset($_POST['submit'])) {
+            $customer = $_POST['customer'];
+            $staff = $_POST['staff'];
+            $cut_dry = $_POST['cut_dry'];
+            $colour = $_POST['colour'];
+            $gents = $_POST['gents'];
+            $hairservice_other = $_POST['hairservice_other'];
 
-            // Count the number of row matched 
-            $user_matched = mysqli_num_rows($email_result);
-
-            // If number of user rows returned more than 0, it means email already exists
-            if ($user_matched > 0) {
-                echo "<br/><br/><strong>Error: </strong> User already exists with the email id '$email'.";
-            } else {
-                //hash password for security https://www.webslesson.info/2016/10/php-login-registration-form-with-md5-password-encryption.html 
                 // Insert user data into database
-                $result   = mysqli_query($con, "INSERT INTO users(name,email,password, address, phone, utype) VALUES('$name','$email','$password', '$address', '$phone', '$utype')");
+                $result   = mysqli_query($con, "INSERT INTO hair_service(customer, staff, cut_dry, colour, gents, hairservice_other) VALUES('$customer', '$staff', '$cut_dry', '$colour', '$gents', '$hairservice_other')");
 
                 // check if user data inserted successfully.
                 if ($result) {
-                    $_SESSION["email"] = $email;
-                    header("location: options.php");
+                    echo "<br/><br/> Hair services added.";
                 } else {
-                    echo "Registration error. Please try again." . mysqli_error($con);
+                    echo "Preference addition error. Please try again." . mysqli_error($con);
                 }
             }
-        }
+        
 
         ?>
     </form>

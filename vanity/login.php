@@ -1,5 +1,5 @@
 <?php
-
+//adapted from https://gitlab.com/tutorialsclass/php-simple-login-registration-script
 // Start PHP session at the beginning 
 session_start();
 
@@ -12,7 +12,7 @@ if (isset($_POST['login'])) {
     $password = $_POST['password'];
 
     // Check if a user exists with given username & password
-    $result = mysqli_query($mysqli, "select 'email', 'password' from users
+    $result = mysqli_query($con, "select 'email', 'password' from users
         where email='$email' and password='$password'");
 
     // Count the number of user/rows returned by query 
@@ -20,9 +20,8 @@ if (isset($_POST['login'])) {
 
     // Check If user matched/exist, store user email in session and redirect to sample page-1
     if ($user_matched > 0) {
-
         $_SESSION["email"] = $email;
-        header("location: page-1.php");
+        header("location: options.php");
     } else {
         echo "User email or password is not matched <br/><br/>";
     }
@@ -62,7 +61,7 @@ if (isset($_POST['login'])) {
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="assets/img/logo/loder.png" alt="">
+                    <img src="assets/img/logo/logo.png" alt="">
                 </div>
             </div>
         </div>
@@ -78,7 +77,7 @@ if (isset($_POST['login'])) {
             <div class="login-form">
                 <!-- logo-login -->
                 <div class="logo-login">
-                    <a href="index.html"><img src="assets/img/logo/loder.png" alt=""></a>
+                    <a href="index.php"><img src="assets/img/logo/loder.png" alt=""></a>
                 </div>
                 <h2>Login Here</h2>
                 <div class="form-input">

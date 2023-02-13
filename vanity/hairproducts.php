@@ -1,9 +1,18 @@
+<?php
+session_start();
+
+// This page can be accessed only after login
+// Redirect user to login page, if user email is not available in session
+if (!isset($_SESSION["email"])) {
+    header("location: login.php");
+}
+?>
 <!doctype html>
 <html class="no-js" lang="zxx">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Register</title>
+    <title> Hair Products</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -42,92 +51,85 @@
 
 <!-- Register -->
 
-<main class="login-body" data-vide-bg="assets/img/login-bg.mp4">
+<main class="login-body">
     <!-- Login Admin -->
     <div class="form">
-    <form class="form-default" action="register.php" method="POST"  >
-   
-        
+    <form class="form-default" action="hairproducts.php" method="POST"  >
+          
         <div class="login-form">
             <!-- logo-login -->
             <div class="logo-login">
                 <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
             </div>
-            <h2>Registration Here</h2>
-
+            <h2>Hair Products</h2>
             <div class="form-input">
-                <label for="name">Full name</label>
-                <input  type="text" name="name" placeholder="Full name">
+                <label for="customer">Customer email:</label>
+                <input type="text" name="customer">
             </div>
             <div class="form-input">
-                <label for="name">Email Address</label>
-                <input type="email" name="email" placeholder="Email Address">
+                <label for="staff">Service provider:</label>
+                <input type="text" name="staff">
             </div>
             <div class="form-input">
-                <label for="name">Password</label>
-                <input type="password" name="password" placeholder="Password">
+                <label for="shampoo">Shampoo:</label>
+                <input type="text" name="shampoo">
             </div>
             <div class="form-input">
-                <label for="name">Confirm Password</label>
-                <input type="password" name="password" placeholder="Confirm Password">
+                <label for="conditioner">Conditioner:</label>
+                <input type="text" name="conditioner">
             </div>
             <div class="form-input">
-                <label for="name">Address</label>
-                <input  type="text" name="address" placeholder="Address">
+                <label for="developer">Developer:</label>
+                <input type="text" name="developer">
             </div>
             <div class="form-input">
-                <label for="name">Phone</label>
-                <input  type="tel" name="phone" placeholder="Phone">
+                <label for="toner">Toner:</label>
+                <input type="text" name="toner">
             </div>
             <div class="form-input">
-                <label for="name">User Type</label><br>
-                <label for="customer">Customer</label><Br><input type="radio" name="utype" value="Customer"><hr>
-                <label for="staff">Staff</label><br><input type="radio" name="utype" value="Staff"><hr>
-                <label for="manager">Manager</label><br><input type="radio" name="utype" value="Manager">
+                <label for="dye">Dye:</label>
+                <input type="text" name="dye">
+            </div>
+            <div class="form-input">
+                <label for="treatment">Treatments:</label>
+                <input type="text" name="treatment">
+            </div>
+            <div class="form-input">
+                <label for="hair_products">Other:</label>
+                <input type="text" name="hair_products">
             </div>
             <div class="form-input pt-30">
-                <input type="submit" name="register" value="Register">
+                <input type="submit" name="submit" value="submit">
             </div>
-            <a href="login.php" class="login">login</a>
         </div>
         <?php
         //including the database connection file
         include_once("db-config.php");
-        //adapted from https://gitlab.com/tutorialsclass/php-simple-login-registration-script
-        // Check If form submitted, insert user data into database.
-        if (isset($_POST['register'])) {
-            $name     = $_POST['name'];
-            $email    = $_POST['email'];
-            //hash password for security https://www.webslesson.info/2016/10/php-login-registration-form-with-md5-password-encryption.html 
-            $password = $_POST['password'];
-            $password = md5($password); 
-            $address = $_POST['address'];
-            $phone = $_POST['phone'];
-            $utype = $_POST['utype'];
 
-            // If email already exists, throw error
-            $email_result = mysqli_query($con, "select 'email' from users where email='$email' and password='$password'");
+        // Check if form submitted, insert user data into database - adapted from https://gitlab.com/tutorialsclass/php-simple-login-registration-script
+        if (isset($_POST['submit'])) {
+            $customer = $_POST['customer'];
+            $staff = $_POST['staff'];
+            $shampoo = $_POST['shampoo'];
+            $conditioner = $_POST['conditioner'];
+            $developer = $_POST['developer'];
+            $toner = $_POST['toner'];
+            $dye = $_POST['dye'];
+            $treatment = $_POST['treatment'];
+            $hair_products = $_POST['hair_products'];
 
-            // Count the number of row matched 
-            $user_matched = mysqli_num_rows($email_result);
-
-            // If number of user rows returned more than 0, it means email already exists
-            if ($user_matched > 0) {
-                echo "<br/><br/><strong>Error: </strong> User already exists with the email id '$email'.";
-            } else {
-                //hash password for security https://www.webslesson.info/2016/10/php-login-registration-form-with-md5-password-encryption.html 
                 // Insert user data into database
-                $result   = mysqli_query($con, "INSERT INTO users(name,email,password, address, phone, utype) VALUES('$name','$email','$password', '$address', '$phone', '$utype')");
+                $result   = mysqli_query($con, "INSERT INTO hair_products(customer, staff, shampoo, conditioner, developer, toner, dye, treatment, hair_products) 
+                VALUES('$customer', '$staff', '$shampoo', '$conditioner', '$developer', '$toner', '$dye', '$treatment', '$hair_products')");
 
                 // check if user data inserted successfully.
                 if ($result) {
-                    $_SESSION["email"] = $email;
-                    header("location: options.php");
+                    echo "<br/><br/> Hair services added.";
                 } else {
-                    echo "Registration error. Please try again." . mysqli_error($con);
+                    echo "Preference addition error. Please try again." . mysqli_error($con);
                 }
             }
-        }
+        
 
         ?>
     </form>

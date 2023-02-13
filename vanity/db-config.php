@@ -1,12 +1,9 @@
 <?php
-/**
- * mysql_connect is deprecated
- * using mysqli_connect instead
- */
-
+//adapted from https://gitlab.com/tutorialsclass/php-simple-login-registration-script/-/blob/master/db-config.php
 $databaseHost     = 'localhost';
-$databaseName     = 'vanitydb';
+$databaseName     = 'vanityprojectdb';
 $databaseUsername = 'root';
 $databasePassword = '';
 
-$mysqli = mysqli_connect($databaseHost, $databaseUsername, $databasePassword, $databaseName);
+$con = mysqli_connect($databaseHost, $databaseUsername, $databasePassword, $databaseName);
+?>
