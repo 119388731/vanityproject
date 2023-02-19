@@ -12,7 +12,7 @@ if (!isset($_SESSION["email"])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Nail Service</title>
+    <title> Beauty Services</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -51,18 +51,16 @@ if (!isset($_SESSION["email"])) {
 
 <!-- Register -->
 
-<main class="login-body">
+<main class="login-body" data-vide-bg="assets/img/login-bg.mp4">
     <!-- Login Admin -->
     <div class="form">
-    <form class="form-default" action="nailservice.php" method="POST"  >
-          
+    <form class="form-default" action="editbeautyservice.php" method="POST"  >
         <div class="login-form">
             <!-- logo-login -->
             <div class="logo-login">
                 <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
             </div>
-            <h2>Nail Services</h2>
-            <!-- nail options adapted from shorturl.at/dgMUV  -->
+            <h2>Beauty Services</h2>
             <div class="form-input">
                 <label for="customer">Customer email:</label>
                 <input type="text" name="customer">
@@ -72,95 +70,84 @@ if (!isset($_SESSION["email"])) {
                 <input type="text" name="staff">
             </div>
             <div class="form-input">
-            <label> Relaxation:</label><br>
-            </div> 
-            <div>
-            <input type="checkbox" name="relaxation" value="mani" /> Manicure<br />
-            <input type="checkbox" name="relaxation" value="pedi" /> Pedicure<br />
-            <input type="checkbox" name="relaxation" value="mani_pedi" /> Manicure & Pedicure<br />
-            <input type="checkbox" name="relaxation" value="shape_polish" /> Buff, Shape, Polish<br />
+            <label for="makeup">Makeup:</label><br>
+            <select name="makeup" id="makeup">
+                <!-- adapted from https://www.christineoconnormua.com/onlinebooking.html -->
+                <option value="makeup_null"> Select an option</option>
+                <option value="glam"> Full Makeup</option>
+                <option value="glam_lashes"> Full Makeup & Lashes</option>
+                <option value="focus"> Focus Feature</option>
+                <option value="halloween"> Halloween Makeup</option>
+                <option value="bridal"> Bridal Look</option>
+                <option value="bridal_trial"> Bridal Trial</option>
+                <option value="lesson"> 1:1 Lesson</option>
+                <option value="online_lesson"> 1:1 Online Lesson</option>
+            </select>
+            </select>
+            <br><br>
             </div>
             <div class="form-input">
-            <label>Gel Polish:</label><br>
-            </div>
-            <div>
-            <input type="checkbox" name="gel" value="gel_mani" /> Gel Manicure<br />
-            <input type="checkbox" name="gel" value="gel_pedi" /> Gel Pedicure<br />
-            <input type="checkbox" name="gel" value="gel_mani_pedi" /> Gel Manicure & Pedicure<br />
-            </div>
-            <div class="form-input">
-            <label>Extensions:</label><br>
-            </div>
-            <div>
-            <input type="checkbox" name="extension" value="extension_colour" /> Single Colour<br />
-            <input type="checkbox" name="extension" value="extension_french" /> French/Ombre <br />
-            <input type="checkbox" name="extension" value="extension_simple" /> Simple design<br />
-            <input type="checkbox" name="extension" value="extension_design" /> All design<br />
-            <input type="checkbox" name="extension" value="extension_complicated" /> Complicated design<br />
+                <!-- lashes and brows adapted from https://www.royalashacademy.com/salon/services -->
+            <label for="brows">Brows:</label><br>
+            <select name="brows" id="brows">
+                <option value="brows_null"> Select an option</option>
+                <option value="threading"> Threading</option>
+                <option value="brow_tint"> Tint</option>
+                <option value="thread_tint"> Thread & Tint</option>
+                <option value="wax"> Waxing</option>
+                <option value="wax_tint"> Wax & Tint</option>
+                <option value="lamination"> Lamination</option>
+            </select>
+            <br><br>
             </div>
             <div class="form-input">
-            <label>Refill/Removal :</label><br>
-            </div>
-            <div>
-            <input type="checkbox" name="refill[]" value="remove_gel_mani" /> Gel manicure removal<br />
-            <input type="checkbox" name="refill[]" value="refill_gel_mani"/> Gel manicure refill <br />
-            <input type="checkbox" name="refill[]" value="remove_gel_pedi" /> Gel pedicure removal<br />
-            <input type="checkbox" name="refill[]" value="refill_gel_pedi" /> Gel pedicure refill<br />
-            <input type="checkbox" name="refill[]" value="refill_extension" /> Extension refill<br />
-            <input type="checkbox" name="refill[]" value="removal_extension" />Extension removal<br />
-            <input type="checkbox" name="refill[]" value="repair_extension" /> Extension repair <br />
+            <label for="lashes">Lashes:</label><br>
+            <select name="lashes" id="lashes">
+                <option value="lash_null"> Select an option</option>
+                <option value="lash_tint"> Lash tint</option>
+                <option value="lash_lift"> Lash lift</option>
+                <option value="classics"> Classic Set</option>
+                <option value="hybrid"> Hybrid Set</option>
+                <option value="volume"> Volume Set</option>
+                <option value="mega_volume"> Mega Volume Set</option>
+            </select>
+            <br><br>
             </div>
             <div class="form-input">
-                <label for="nailservice_other">Other:</label>
-                <input type="text" name="nailservice_other" placeholder="Treatments used etc">
+            <label for="maintenance">Maintenance:</label><br>
+            <select name="maintenance" id="maintenance">
+                <option value="maintenace_null"> Select an option</option>
+                <option value="class_refill"> Classic Set Refill</option>
+                <option value="hybrid_refill"> Hybrid Set Refill</option>
+                <option value="volume_refill"> Volume Set Refill</option>
+                <option value="mega_volume_refill"> Mega Volume Set Refill</option>
+                <option value="extension_removal"> Extension Removal</option>
+            </select>
             </div>
+            <br>
             <div class="form-input pt-30">
-                <input type="submit" name="submit" value="submit">
+                <input type="submit" name="submit" value="Submit">
             </div>
         </div>
         <?php
         //including the database connection file
         include_once("db-config.php");
 
-        // Check if form submitted, insert user data into database - adapted from https://gitlab.com/tutorialsclass/php-simple-login-registration-script
+        // Check If form submitted, insert user data into database.
         if (isset($_POST['submit'])) {
             $customer = $_POST['customer'];
             $staff = $_POST['staff'];
-
-            if (isset($_POST['relaxation'])){
-                $relaxation = $_POST['relaxation'];
-            }else{
-                $relaxation = null;
-            }
-
-            if (isset($_POST['gel'])){
-                $gel = $_POST['gel'];
-            }else{
-                $gel = null;
-            }
-
-            if (isset($_POST['extension'])){
-                $extension = $_POST['extension'];
-            }else{
-                $extension = null;
-            }
-
-            if (isset($_POST['refill'])){
-                $refill = $_POST['refill'];
-                $multirefill = implode(",",$refill);
-            }else{
-                $multirefill = null;
-            }
-
-            $nailservice_other = $_POST['nailservice_other'];
-           
+            $makeup = $_POST['makeup'];
+            $brows = $_POST['brows'];
+            $lashes = $_POST['lashes'];
+            $maintenance = $_POST['maintenance'];
 
                 // Insert user data into database
-                $result   = mysqli_query($con, "INSERT INTO nail_service(customer, staff, relaxation, gel, extension, refill, nailservice_other) VALUES('$customer', '$staff', '$relaxation', '$gel', '$extension', '$multirefill', '$nailservice_other')");
+                $result   = mysqli_query($con, "UPDATE beauty_service SET customer='$customer',staff='$staff', makeup='$makeup', brows='$brows', lashes='$lashes', maintenance='$maintenance");
 
                 // check if user data inserted successfully.
                 if ($result) {
-                    echo "<br/><br/> Nail services added.";
+                    echo "<br/><br/> Beauty services added.";
                 } else {
                     echo "Preference addition error. Please try again." . mysqli_error($con);
                 }

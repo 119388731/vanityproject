@@ -12,7 +12,7 @@ if (!isset($_SESSION["email"])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Nail Service</title>
+    <title> Beauty Products</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -54,15 +54,14 @@ if (!isset($_SESSION["email"])) {
 <main class="login-body">
     <!-- Login Admin -->
     <div class="form">
-    <form class="form-default" action="nailservice.php" method="POST"  >
+    <form class="form-default" action="makeupproducts.php" method="POST"  >
           
         <div class="login-form">
             <!-- logo-login -->
             <div class="logo-login">
                 <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
             </div>
-            <h2>Nail Services</h2>
-            <!-- nail options adapted from shorturl.at/dgMUV  -->
+            <h2>Beauty Products</h2>
             <div class="form-input">
                 <label for="customer">Customer email:</label>
                 <input type="text" name="customer">
@@ -72,47 +71,56 @@ if (!isset($_SESSION["email"])) {
                 <input type="text" name="staff">
             </div>
             <div class="form-input">
-            <label> Relaxation:</label><br>
-            </div> 
-            <div>
-            <input type="checkbox" name="relaxation" value="mani" /> Manicure<br />
-            <input type="checkbox" name="relaxation" value="pedi" /> Pedicure<br />
-            <input type="checkbox" name="relaxation" value="mani_pedi" /> Manicure & Pedicure<br />
-            <input type="checkbox" name="relaxation" value="shape_polish" /> Buff, Shape, Polish<br />
+                <label for="primer">Primer:</label>
+                <input type="text" name="primer">
             </div>
             <div class="form-input">
-            <label>Gel Polish:</label><br>
-            </div>
-            <div>
-            <input type="checkbox" name="gel" value="gel_mani" /> Gel Manicure<br />
-            <input type="checkbox" name="gel" value="gel_pedi" /> Gel Pedicure<br />
-            <input type="checkbox" name="gel" value="gel_mani_pedi" /> Gel Manicure & Pedicure<br />
+                <label for="foundation">Foundation:</label>
+                <input type="text" name="foundation">
             </div>
             <div class="form-input">
-            <label>Extensions:</label><br>
-            </div>
-            <div>
-            <input type="checkbox" name="extension" value="extension_colour" /> Single Colour<br />
-            <input type="checkbox" name="extension" value="extension_french" /> French/Ombre <br />
-            <input type="checkbox" name="extension" value="extension_simple" /> Simple design<br />
-            <input type="checkbox" name="extension" value="extension_design" /> All design<br />
-            <input type="checkbox" name="extension" value="extension_complicated" /> Complicated design<br />
+                <label for="powder">Powder:</label>
+                <input type="text" name="powder">
             </div>
             <div class="form-input">
-            <label>Refill/Removal :</label><br>
-            </div>
-            <div>
-            <input type="checkbox" name="refill[]" value="remove_gel_mani" /> Gel manicure removal<br />
-            <input type="checkbox" name="refill[]" value="refill_gel_mani"/> Gel manicure refill <br />
-            <input type="checkbox" name="refill[]" value="remove_gel_pedi" /> Gel pedicure removal<br />
-            <input type="checkbox" name="refill[]" value="refill_gel_pedi" /> Gel pedicure refill<br />
-            <input type="checkbox" name="refill[]" value="refill_extension" /> Extension refill<br />
-            <input type="checkbox" name="refill[]" value="removal_extension" />Extension removal<br />
-            <input type="checkbox" name="refill[]" value="repair_extension" /> Extension repair <br />
+                <label for="contour">Contour:</label>
+                <input type="text" name="contour">
             </div>
             <div class="form-input">
-                <label for="nailservice_other">Other:</label>
-                <input type="text" name="nailservice_other" placeholder="Treatments used etc">
+                <label for="concealer">Concealer:</label>
+                <input type="text" name="concealer">
+            </div>
+            <div class="form-input">
+                <label for="blush">Blush:</label>
+                <input type="text" name="blush">
+            </div>
+            <div class="form-input">
+                <label for="eyeshadow">Eyeshadow:</label>
+                <input type="text" name="eyeshadow">
+            </div>
+            <div class="form-input">
+                <label for="liner">Eyeliner:</label>
+                <input type="text" name="liner">
+            </div>
+            <div class="form-input">
+                <label for="lashes">Lashes:</label>
+                <input type="text" name="lashes">
+            </div>
+            <div class="form-input">
+                <label for="lipstick">Lipstick:</label>
+                <input type="text" name="lipstick">
+            </div>
+            <div class="form-input">
+                <label for="lipliner">Lipliner:</label>
+                <input type="text" name="lipliner">
+            </div>
+            <div class="form-input">
+                <label for="lipgloss">Lipgloss:</label>
+                <input type="text" name="lipgloss">
+            </div>
+            <div class="form-input">
+                <label for="makeup_other">Other:</label>
+                <input type="text" name="makeup_other" placeholder="Setting Spray, gems, etc">
             </div>
             <div class="form-input pt-30">
                 <input type="submit" name="submit" value="submit">
@@ -126,41 +134,27 @@ if (!isset($_SESSION["email"])) {
         if (isset($_POST['submit'])) {
             $customer = $_POST['customer'];
             $staff = $_POST['staff'];
-
-            if (isset($_POST['relaxation'])){
-                $relaxation = $_POST['relaxation'];
-            }else{
-                $relaxation = null;
-            }
-
-            if (isset($_POST['gel'])){
-                $gel = $_POST['gel'];
-            }else{
-                $gel = null;
-            }
-
-            if (isset($_POST['extension'])){
-                $extension = $_POST['extension'];
-            }else{
-                $extension = null;
-            }
-
-            if (isset($_POST['refill'])){
-                $refill = $_POST['refill'];
-                $multirefill = implode(",",$refill);
-            }else{
-                $multirefill = null;
-            }
-
-            $nailservice_other = $_POST['nailservice_other'];
-           
+            $primer = $_POST['primer'];
+            $foundation = $_POST['foundation'];
+            $powder = $_POST['powder'];
+            $contour = $_POST['contour'];
+            $concealer = $_POST['concealer'];
+            $blush = $_POST['nail_treatment'];
+            $eyeshadow = $_POST['eyeshadow'];
+            $liner = $_POST['liner'];
+            $lashes = $_POST['lashes'];
+            $lipstick = $_POST['lipstick'];
+            $lipliner = $_POST['lipliner'];
+            $lipgloss = $_POST['lipgloss'];
+            $makeup_other = $_POST['makeup_other'];
 
                 // Insert user data into database
-                $result   = mysqli_query($con, "INSERT INTO nail_service(customer, staff, relaxation, gel, extension, refill, nailservice_other) VALUES('$customer', '$staff', '$relaxation', '$gel', '$extension', '$multirefill', '$nailservice_other')");
+                $result   = mysqli_query($con, "UPDATE makeup_products SET customer='$customer', staff='$staff', primer='$primer', foundation='$foundation', powder='$powder', contour='$contour', concealer='$concealer', blush='$blush, 
+                eyeshadow='$eyeshadow', liner='$liner', lashes='$lashes', lipstick='$lipstick', lipliner='$lipliner', lipgloss='$lipgloss', makeup_other='$makeup_other'");
 
                 // check if user data inserted successfully.
                 if ($result) {
-                    echo "<br/><br/> Nail services added.";
+                    echo "<br/><br/> Hair services added.";
                 } else {
                     echo "Preference addition error. Please try again." . mysqli_error($con);
                 }

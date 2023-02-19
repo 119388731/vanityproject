@@ -12,7 +12,7 @@ if (!isset($_SESSION["email"])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Nail Preferences</title>
+    <title> Nail Products</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -50,53 +50,86 @@ if (!isset($_SESSION["email"])) {
 
 
 <!-- Register -->
-<body class="bg-dark">
 
-<div class="container">
-    <div class="row">
-        <div class="col m-auto">
-            <div class="card mt-5">
-                <table class="table table-bordered">
-                    <!--adapted from https://www.onlineittuts.com/fetch-data-database-in-php.html -->
-                    <tr>
-                        <td> Email </td>
-                        <td> Nail Length </td>
-                        <td> Nail Description </td>
-                        <td> Notes </td>
-                    </tr>
-
-                    <?php 
-
-                        include('db-config.php');
-                        $query = "SELECT * FROM nail_pref";
-
-                    $result = mysqli_query($con, $query);
-
-                            while($row=mysqli_fetch_assoc($result))
-                            {
-                                $email = $row['email'];
-                                $nail_length = $row['nail_length'];
-                                $nail_desc = $row['nail_desc'];
-                                $nail_notes = $row['nail_notes'];
-                    ?>
-                            <tr>
-                                <td><?php echo $email ?></td>
-                                <td><?php echo $nail_length ?></td>
-                                <td><?php echo $nail_desc ?></td>
-                                <td><?php echo $nail_notes ?></td>
-                                <td><a href="editnails.php" class="btn btn-pencil">Edit</a></td>
-                                <td><a href="deletenails.php" class="btn btn-pencil">Delete</a></td>
-                            </tr>        
-                    <?php 
-                            }  
-                    ?>                                             
-                           
-
-                </table>
+<main class="login-body">
+    <!-- Login Admin -->
+    <div class="form">
+    <form class="form-default" action="nailproducts.php" method="POST"  >
+          
+        <div class="login-form">
+            <!-- logo-login -->
+            <div class="logo-login">
+                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+            </div>
+            <h2>Nail Products</h2>
+            <!-- Nail products adapted from https://www.wikihow.com/Do-Acrylic-Nails-->
+            <div class="form-input">
+                <label for="customer">Customer email:</label>
+                <input type="text" name="customer">
+            </div>
+            <div class="form-input">
+                <label for="staff">Service provider:</label>
+                <input type="text" name="staff">
+            </div>
+            <div class="form-input">
+                <label for="polish">Polish Colour:</label>
+                <input type="text" name="polish">
+            </div>
+            <div class="form-input">
+                <label for="gel_polish">Gel Colour:</label>
+                <input type="text" name="gel_polish">
+            </div>
+            <div class="form-input">
+                <label for="tip">Nail Tip Size:</label>
+                <input type="text" name="tip">
+            </div>
+            <div class="form-input">
+                <label for="acrylic_powder">Acrylic Powder:</label>
+                <input type="text" name="acrylic_powder">
+            </div>
+            <div class="form-input">
+                <label for="nail_treatment">Treatments:</label>
+                <input type="text" name="nail_treatment">
+            </div>
+            <div class="form-input">
+                <label for="nail_products">Other:</label>
+                <input type="text" name="nail_products">
+            </div>
+            <div class="form-input pt-30">
+                <input type="submit" name="submit" value="submit">
             </div>
         </div>
+        <?php
+        //including the database connection file
+        include_once("db-config.php");
+
+        // Check if form submitted, insert user data into database - adapted from https://gitlab.com/tutorialsclass/php-simple-login-registration-script
+        if (isset($_POST['submit'])) {
+            $customer = $_POST['customer'];
+            $staff = $_POST['staff'];
+            $polish = $_POST['polish'];
+            $gel_polish = $_POST['gel_polish'];
+            $tip = $_POST['tip'];
+            $acrylic_powder = $_POST['acrylic_powder'];
+            $nail_treatment = $_POST['nail_treatment'];
+            $nail_products = $_POST['nail_products'];
+
+                // Insert user data into database
+                $result   = mysqli_query($con, "INSERT INTO nail_products(customer, staff, polish, gel_polish, tip, acrylic_powder, nail_treatment, nail_products) 
+                VALUES('$customer', '$staff', '$polish', '$gel_polish', '$tip', '$acrylic_powder', '$nail_treatment', '$nail_products')");
+
+                // check if user data inserted successfully.
+                if ($result) {
+                    echo "<br/><br/> Hair services added.";
+                } else {
+                    echo "Preference addition error. Please try again." . mysqli_error($con);
+                }
+            }
+        
+
+        ?>
+    </form>
     </div>
-</div>
     <!-- /end login form -->
 </main>
 

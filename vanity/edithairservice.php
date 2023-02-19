@@ -12,7 +12,7 @@ if (!isset($_SESSION["email"])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Nail Service</title>
+    <title> Hair Service</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -54,15 +54,14 @@ if (!isset($_SESSION["email"])) {
 <main class="login-body">
     <!-- Login Admin -->
     <div class="form">
-    <form class="form-default" action="nailservice.php" method="POST"  >
+    <form class="form-default" action="hairservice.php" method="POST"  >
           
         <div class="login-form">
             <!-- logo-login -->
             <div class="logo-login">
                 <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
             </div>
-            <h2>Nail Services</h2>
-            <!-- nail options adapted from shorturl.at/dgMUV  -->
+            <h2>Hair Services</h2>
             <div class="form-input">
                 <label for="customer">Customer email:</label>
                 <input type="text" name="customer">
@@ -72,47 +71,37 @@ if (!isset($_SESSION["email"])) {
                 <input type="text" name="staff">
             </div>
             <div class="form-input">
-            <label> Relaxation:</label><br>
-            </div> 
-            <div>
-            <input type="checkbox" name="relaxation" value="mani" /> Manicure<br />
-            <input type="checkbox" name="relaxation" value="pedi" /> Pedicure<br />
-            <input type="checkbox" name="relaxation" value="mani_pedi" /> Manicure & Pedicure<br />
-            <input type="checkbox" name="relaxation" value="shape_polish" /> Buff, Shape, Polish<br />
-            </div>
-            <div class="form-input">
-            <label>Gel Polish:</label><br>
+                <!-- hair options from: https://unisalon1.gettimely.com/Booking/Location/60422?mobile=True -->
+            <label>Cut and Blowdry:</label><br>
             </div>
             <div>
-            <input type="checkbox" name="gel" value="gel_mani" /> Gel Manicure<br />
-            <input type="checkbox" name="gel" value="gel_pedi" /> Gel Pedicure<br />
-            <input type="checkbox" name="gel" value="gel_mani_pedi" /> Gel Manicure & Pedicure<br />
+            <input type="checkbox" name="cut_dry[]" value="cutblow" />Cut and Blowdry<br />
+            <input type="checkbox" name="cut_dry[]" value="blowdry" />Short - Med blowdry<br />
+            <input type="checkbox" name="cut_dry[]" value="blowdrylong" />Long Blowdry<br />
+            <input type="checkbox" name="cut_dry[]" value="blowdrycurly" />Curly Blowdry<br />
             </div>
             <div class="form-input">
-            <label>Extensions:</label><br>
+            <label>Colour:</label><br>
             </div>
             <div>
-            <input type="checkbox" name="extension" value="extension_colour" /> Single Colour<br />
-            <input type="checkbox" name="extension" value="extension_french" /> French/Ombre <br />
-            <input type="checkbox" name="extension" value="extension_simple" /> Simple design<br />
-            <input type="checkbox" name="extension" value="extension_design" /> All design<br />
-            <input type="checkbox" name="extension" value="extension_complicated" /> Complicated design<br />
+            <input type="checkbox" name="colour[]" value="fullcolour" />Full colour<br />
+            <input type="checkbox" name="colour[]" value="root" />Root touch up<br />
+            <input type="checkbox" name="colour[]" value="fullmeche" />Full meche<br />
+            <input type="checkbox" name="colour[]" value="halfmeche" />Half meche<br />
+            <input type="checkbox" name="colour[]" value="balayage" />Balayage<br />
             </div>
             <div class="form-input">
-            <label>Refill/Removal :</label><br>
+            <label>Gents:</label><br>
             </div>
             <div>
-            <input type="checkbox" name="refill[]" value="remove_gel_mani" /> Gel manicure removal<br />
-            <input type="checkbox" name="refill[]" value="refill_gel_mani"/> Gel manicure refill <br />
-            <input type="checkbox" name="refill[]" value="remove_gel_pedi" /> Gel pedicure removal<br />
-            <input type="checkbox" name="refill[]" value="refill_gel_pedi" /> Gel pedicure refill<br />
-            <input type="checkbox" name="refill[]" value="refill_extension" /> Extension refill<br />
-            <input type="checkbox" name="refill[]" value="removal_extension" />Extension removal<br />
-            <input type="checkbox" name="refill[]" value="repair_extension" /> Extension repair <br />
+            <input type="checkbox" name="gents[]" value="blowdrygents" />Blowdry<br />
+            <input type="checkbox" name="gents[]" value="dye" />Colour<br />
+            <input type="checkbox" name="gents[]" value="fade" />Fade<br />
+            <input type="checkbox" name="gents[]" value="haircut" />Cut<br />
             </div>
             <div class="form-input">
-                <label for="nailservice_other">Other:</label>
-                <input type="text" name="nailservice_other" placeholder="Treatments used etc">
+                <label for="hairservice_other">Other:</label>
+                <input type="text" name="hairservice_other" placeholder="Treatments etc">
             </div>
             <div class="form-input pt-30">
                 <input type="submit" name="submit" value="submit">
@@ -127,40 +116,36 @@ if (!isset($_SESSION["email"])) {
             $customer = $_POST['customer'];
             $staff = $_POST['staff'];
 
-            if (isset($_POST['relaxation'])){
-                $relaxation = $_POST['relaxation'];
+//Null insert to databse https://stackoverflow.com/questions/10809937/undefined-index-with-post
+//Insert multiple checkbox values https://www.myprograming.com/how-to-insert-multiple-selected-checkbox-values-in-database-in-php/ 
+            if (isset($_POST['cut_dry'])){
+                $cut_dry = $_POST['cut_dry'];
+                $multicutdry=implode(",",$cut_dry);
             }else{
-                $relaxation = null;
+                $multicutdry = null;
             }
 
-            if (isset($_POST['gel'])){
-                $gel = $_POST['gel'];
+            if (isset($_POST['colour'])){
+                $colour = $_POST['colour'];
+                $multicolour=implode(",",$colour);
             }else{
-                $gel = null;
+                $multicolour= null;
             }
 
-            if (isset($_POST['extension'])){
-                $extension = $_POST['extension'];
+            if (isset($_POST['gents'])){
+                $gents = $_POST['gents'];
+                $multigents=implode(",",$gents);
             }else{
-                $extension = null;
+                $multigents = null;
             }
-
-            if (isset($_POST['refill'])){
-                $refill = $_POST['refill'];
-                $multirefill = implode(",",$refill);
-            }else{
-                $multirefill = null;
-            }
-
-            $nailservice_other = $_POST['nailservice_other'];
-           
-
-                // Insert user data into database
-                $result   = mysqli_query($con, "INSERT INTO nail_service(customer, staff, relaxation, gel, extension, refill, nailservice_other) VALUES('$customer', '$staff', '$relaxation', '$gel', '$extension', '$multirefill', '$nailservice_other')");
+            
+            $hairservice_other = $_POST['hairservice_other'];
+            
+                $result   = mysqli_query($con, "UPDATE hair_service SET customer='$customer', staff='$staff', cut_dry='$multicutdry', colour='$multicolour', gents='$gents', hairservice_other='$hairservice_other')");
 
                 // check if user data inserted successfully.
                 if ($result) {
-                    echo "<br/><br/> Nail services added.";
+                    echo "<br/><br/> Hair services added.";
                 } else {
                     echo "Preference addition error. Please try again." . mysqli_error($con);
                 }

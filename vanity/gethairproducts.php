@@ -99,7 +99,7 @@ if (!isset($_SESSION["email"])) {
                                 <td><?php echo $dye ?></td>
                                 <td><?php echo $treatment ?></td>
                                 <td><?php echo $hair_products ?></td>
-                                <td><a href="edithairproduct.php" class="btn btn-pencil">Edit</a></td>
+                                <td><a href="edithairproducts.php" class="btn btn-pencil">Edit</a></td>
                                 <td><a href="deletehair.php" class="btn btn-danger">Delete</a></td>
                             </tr>        
                     <?php 

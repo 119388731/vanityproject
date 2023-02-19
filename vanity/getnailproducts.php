@@ -12,7 +12,7 @@ if (!isset($_SESSION["email"])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Nail Preferences</title>
+    <title> Nail Products</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -59,37 +59,49 @@ if (!isset($_SESSION["email"])) {
                 <table class="table table-bordered">
                     <!--adapted from https://www.onlineittuts.com/fetch-data-database-in-php.html -->
                     <tr>
-                        <td> Email </td>
-                        <td> Nail Length </td>
-                        <td> Nail Description </td>
-                        <td> Notes </td>
+                        <td> Customer </td>
+                        <td> Staff </td>
+                        <td> Polish </td>
+                        <td> Gel_Polish </td>
+                        <td> Tip Size </td>
+                        <td> Acrylic Powder </td>
+                        <td> Treatments </td>
+                        <td> Other </td>
                     </tr>
 
                     <?php 
 
                         include('db-config.php');
-                        $query = "SELECT * FROM nail_pref";
-
+                    $query = "SELECT * FROM nail_products";
+                    
                     $result = mysqli_query($con, $query);
 
                             while($row=mysqli_fetch_assoc($result))
                             {
-                                $email = $row['email'];
-                                $nail_length = $row['nail_length'];
-                                $nail_desc = $row['nail_desc'];
-                                $nail_notes = $row['nail_notes'];
+                                $customer = $row['customer'];
+                                $staff = $row['staff'];
+                                $polish = $row['polish'];
+                                $gel_polish = $row['gel_polish'];
+                                $tip = $row['tip'];
+                                $acrylic_powder = $row['acrylic_powder'];
+                                $nail_treatment = $row['nail_treatment'];
+                                $nail_products = $row['nail_products'];
                     ?>
                             <tr>
-                                <td><?php echo $email ?></td>
-                                <td><?php echo $nail_length ?></td>
-                                <td><?php echo $nail_desc ?></td>
-                                <td><?php echo $nail_notes ?></td>
-                                <td><a href="editnails.php" class="btn btn-pencil">Edit</a></td>
-                                <td><a href="deletenails.php" class="btn btn-pencil">Delete</a></td>
+                                <td><?php echo $customer ?></td>
+                                <td><?php echo $staff ?></td>
+                                <td><?php echo $polish ?></td>
+                                <td><?php echo $gel_polish ?></td>
+                                <td><?php echo $tip ?></td>
+                                <td><?php echo $acrylic_powder ?></td>
+                                <td><?php echo $nail_treatment ?></td>
+                                <td><?php echo $nail_products ?></td>
+                                <td><a href="editnailproducts.php" class="btn btn-pencil">Edit</a></td>
+                                <td><a href="deletehair.php" class="btn btn-danger">Delete</a></td>
                             </tr>        
                     <?php 
                             }  
-                    ?>                                             
+                    ?>                                                                    
                            
 
                 </table>

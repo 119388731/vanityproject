@@ -52,7 +52,7 @@ if (!isset($_SESSION["email"])) {
 <!-- Register -->
 <body class="bg-dark">
 
-<div class="container">
+<div class="section-top-border">
     <div class="row">
         <div class="col m-auto">
             <div class="card mt-5">

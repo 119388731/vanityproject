@@ -12,7 +12,7 @@ if (!isset($_SESSION["email"])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Nail Preferences</title>
+    <title> Hair Services</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -59,37 +59,43 @@ if (!isset($_SESSION["email"])) {
                 <table class="table table-bordered">
                     <!--adapted from https://www.onlineittuts.com/fetch-data-database-in-php.html -->
                     <tr>
-                        <td> Email </td>
-                        <td> Nail Length </td>
-                        <td> Nail Description </td>
+                        <td> Customer </td>
+                        <td> Staff </td>
+                        <td> General </td>
+                        <td> Colour </td>
+                        <td> Gents </td>
                         <td> Notes </td>
                     </tr>
 
                     <?php 
 
                         include('db-config.php');
-                        $query = "SELECT * FROM nail_pref";
-
+                    $query = "SELECT * FROM hair_service";
+                    
                     $result = mysqli_query($con, $query);
 
                             while($row=mysqli_fetch_assoc($result))
                             {
-                                $email = $row['email'];
-                                $nail_length = $row['nail_length'];
-                                $nail_desc = $row['nail_desc'];
-                                $nail_notes = $row['nail_notes'];
+                                $customer = $row['customer'];
+                                $staff = $row['staff'];
+                                $cut_dry = $row['cut_dry'];
+                                $colour = $row['colour'];
+                                $gents = $row['gents'];
+                                $hairservice_other = $row['hairservice_other'];
                     ?>
                             <tr>
-                                <td><?php echo $email ?></td>
-                                <td><?php echo $nail_length ?></td>
-                                <td><?php echo $nail_desc ?></td>
-                                <td><?php echo $nail_notes ?></td>
-                                <td><a href="editnails.php" class="btn btn-pencil">Edit</a></td>
-                                <td><a href="deletenails.php" class="btn btn-pencil">Delete</a></td>
+                                <td><?php echo $customer ?></td>
+                                <td><?php echo $staff ?></td>
+                                <td><?php echo $cut_dry ?></td>
+                                <td><?php echo $colour ?></td>
+                                <td><?php echo $gents ?></td>
+                                <td><?php echo $hairservice_other ?></td>
+                                <td><a href="edithairservice.php" class="btn btn-pencil">Edit</a></td>
+                                <td><a href="deletehair.php" class="btn btn-danger">Delete</a></td>
                             </tr>        
                     <?php 
                             }  
-                    ?>                                             
+                    ?>                                                                    
                            
 
                 </table>

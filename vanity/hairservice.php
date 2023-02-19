@@ -75,29 +75,29 @@ if (!isset($_SESSION["email"])) {
             <label>Cut and Blowdry:</label><br>
             </div>
             <div>
-            <input type="checkbox" name="cut_dry" value="cutblow" />Cut and Blowdry<br />
-            <input type="checkbox" name="cut_dry" value="blowdry" />Short - Med blowdry<br />
-            <input type="checkbox" name="cut_dry" value="blowdrylong" />Long Blowdry<br />
-            <input type="checkbox" name="cut_dry" value="blowdrycurly" />Curly Blowdry<br />
+            <input type="checkbox" name="cut_dry[]" value="cutblow" />Cut and Blowdry<br />
+            <input type="checkbox" name="cut_dry[]" value="blowdry" />Short - Med blowdry<br />
+            <input type="checkbox" name="cut_dry[]" value="blowdrylong" />Long Blowdry<br />
+            <input type="checkbox" name="cut_dry[]" value="blowdrycurly" />Curly Blowdry<br />
             </div>
             <div class="form-input">
             <label>Colour:</label><br>
             </div>
             <div>
-            <input type="checkbox" name="colour" value="fullcolour" />Full colour<br />
-            <input type="checkbox" name="colour" value="root" />Root touch up<br />
-            <input type="checkbox" name="colour" value="fullmeche" />Full meche<br />
-            <input type="checkbox" name="colour" value="halfmeche" />Half meche<br />
-            <input type="checkbox" name="colour" value="balayage" />Balayage<br />
+            <input type="checkbox" name="colour[]" value="fullcolour" />Full colour<br />
+            <input type="checkbox" name="colour[]" value="root" />Root touch up<br />
+            <input type="checkbox" name="colour[]" value="fullmeche" />Full meche<br />
+            <input type="checkbox" name="colour[]" value="halfmeche" />Half meche<br />
+            <input type="checkbox" name="colour[]" value="balayage" />Balayage<br />
             </div>
             <div class="form-input">
             <label>Gents:</label><br>
             </div>
             <div>
-            <input type="checkbox" name="gents" value="blowdrygents" />Gents<br />
-            <input type="checkbox" name="gents" value="dye" />Colour<br />
-            <input type="checkbox" name="gents" value="fade" />Fade<br />
-            <input type="checkbox" name="gents" value="haircut" />Cut<br />
+            <input type="checkbox" name="gents[]" value="blowdrygents" />Blowdry<br />
+            <input type="checkbox" name="gents[]" value="dye" />Colour<br />
+            <input type="checkbox" name="gents[]" value="fade" />Fade<br />
+            <input type="checkbox" name="gents[]" value="haircut" />Cut<br />
             </div>
             <div class="form-input">
                 <label for="hairservice_other">Other:</label>
@@ -115,13 +115,36 @@ if (!isset($_SESSION["email"])) {
         if (isset($_POST['submit'])) {
             $customer = $_POST['customer'];
             $staff = $_POST['staff'];
-            $cut_dry = $_POST['cut_dry'];
-            $colour = $_POST['colour'];
-            $gents = $_POST['gents'];
+
+//Null insert to databse https://stackoverflow.com/questions/10809937/undefined-index-with-post
+//Insert multiple checkbox values https://www.myprograming.com/how-to-insert-multiple-selected-checkbox-values-in-database-in-php/ 
+            if (isset($_POST['cut_dry'])){
+                $cut_dry = $_POST['cut_dry'];
+                $multicutdry=implode(",",$cut_dry);
+            }else{
+                $multicutdry = null;
+            }
+
+            if (isset($_POST['colour'])){
+                $colour = $_POST['colour'];
+                $multicolour=implode(",",$colour);
+            }else{
+                $multicolour= null;
+            }
+
+            if (isset($_POST['gents'])){
+                $gents = $_POST['gents'];
+                $multigents=implode(",",$gents);
+            }else{
+                $multigents = null;
+            }
+            
             $hairservice_other = $_POST['hairservice_other'];
+            
+            
 
                 // Insert user data into database
-                $result   = mysqli_query($con, "INSERT INTO hair_service(customer, staff, cut_dry, colour, gents, hairservice_other) VALUES('$customer', '$staff', '$cut_dry', '$colour', '$gents', '$hairservice_other')");
+                $result   = mysqli_query($con, "INSERT INTO hair_service(customer, staff, cut_dry, colour, gents, hairservice_other) VALUES('$customer', '$staff', '$multicutdry', '$multicolour', '$multigents', '$hairservice_other')");
 
                 // check if user data inserted successfully.
                 if ($result) {

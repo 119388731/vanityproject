@@ -156,11 +156,11 @@ if (!isset($_SESSION["email"])) {
            
 
                 // Insert user data into database
-                $result   = mysqli_query($con, "INSERT INTO nail_service(customer, staff, relaxation, gel, extension, refill, nailservice_other) VALUES('$customer', '$staff', '$relaxation', '$gel', '$extension', '$multirefill', '$nailservice_other')");
+                $result   = mysqli_query($con, "UPDATE nail_service SET csutomer='$customer', staff='$staff', relaxation='$relaxation', gel='$gel', extension='$extension', refill='$multirefill', nailservice_other='$nailservice_other'");
 
                 // check if user data inserted successfully.
                 if ($result) {
-                    echo "<br/><br/> Nail services added.";
+                    echo "<br/><br/> Nail services updated.";
                 } else {
                     echo "Preference addition error. Please try again." . mysqli_error($con);
                 }

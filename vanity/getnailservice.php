@@ -59,31 +59,40 @@ if (!isset($_SESSION["email"])) {
                 <table class="table table-bordered">
                     <!--adapted from https://www.onlineittuts.com/fetch-data-database-in-php.html -->
                     <tr>
-                        <td> Email </td>
-                        <td> Nail Length </td>
-                        <td> Nail Description </td>
-                        <td> Notes </td>
+                        <td> Customer </td>
+                        <td> Staff </td>
+                        <td> Relaxation </td>
+                        <td> Gel </td>
+                        <td> Extension </td>
+                        <td> Refill </td>
+                        <td> Other </td>
                     </tr>
 
                     <?php 
 
                         include('db-config.php');
-                        $query = "SELECT * FROM nail_pref";
+                        $query = "SELECT * FROM nail_service";
 
                     $result = mysqli_query($con, $query);
 
                             while($row=mysqli_fetch_assoc($result))
                             {
-                                $email = $row['email'];
-                                $nail_length = $row['nail_length'];
-                                $nail_desc = $row['nail_desc'];
-                                $nail_notes = $row['nail_notes'];
+                                $customer = $row['customer'];
+                                $staff = $row['staff'];
+                                $relaxation = $row['relaxation'];
+                                $gel = $row['gel'];
+                                $extension = $row['extension'];
+                                $refill = $row['refill'];
+                                $nailservice_other = $row['nailservice_other'];
                     ?>
                             <tr>
-                                <td><?php echo $email ?></td>
-                                <td><?php echo $nail_length ?></td>
-                                <td><?php echo $nail_desc ?></td>
-                                <td><?php echo $nail_notes ?></td>
+                                <td><?php echo $customer ?></td>
+                                <td><?php echo $staff ?></td>
+                                <td><?php echo $relaxation ?></td>
+                                <td><?php echo $gel ?></td>
+                                <td><?php echo $extension ?></td>
+                                <td><?php echo $refill ?></td>
+                                <td><?php echo $nailservice_other ?></td>
                                 <td><a href="editnails.php" class="btn btn-pencil">Edit</a></td>
                                 <td><a href="deletenails.php" class="btn btn-pencil">Delete</a></td>
                             </tr>        
